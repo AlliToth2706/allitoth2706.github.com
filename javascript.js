@@ -163,7 +163,8 @@ function addOption(i) {
 }
 
 const createQuizButton = document.getElementById('quiz-button');
-const submitQuizButton = document.getElementById('submit');
+const submitQuizButton = document.getElementById('quiz-submit');
+const submitButton = document.getElementById('submit');
 const quizMakerContainer = document.getElementById('quiz-maker');
 const quizMain = document.getElementById('quiz-main');
 const quizContainer = document.getElementById('quiz');
@@ -176,6 +177,7 @@ document.getElementById('quiz-button').addEventListener('click', function () {
     quizMain.style.display = 'block';
     quizMakerContainer.style.display = 'block';
     createQuizButton.style.display = 'none';
+    submitQuizButton.style.display = 'block';
 });
 
 var question_counter = 0;
@@ -202,7 +204,7 @@ let elements = []
 let myQuestions = [];
 // Kick things off
 
-submitButton.addEventListener('click', function () {
+submitQuizButton.addEventListener('click', function () {
     for (i = 1; i < (question_counter + 1); i++) {
         var x = $(`#question-${i}`).serializeArray();
         elements.push([]);
@@ -230,10 +232,12 @@ submitButton.addEventListener('click', function () {
     submitQuizButton.style.display = 'none';
     quizContainer.style.display = 'block';
     resultsContainer.style.display = 'block';
+    submitButton.style.display = 'block';
 
     buildQuiz();
-    showResults();
 });
+
+submitButton.addEventListener('click', showResults);
 
 })();
 

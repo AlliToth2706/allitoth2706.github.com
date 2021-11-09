@@ -191,8 +191,8 @@ let myQuestions = [];
 submitButton.addEventListener('click', function () {
     for (i = 1; i < (question_counter + 1); i++) {
         var x = $(`#question-${i}`).serializeArray();
+        elements.push([]);
         $.each(x, function(j, field) {
-            elements.push([]);
             elements[i].push(field.value + "");
         });
     }

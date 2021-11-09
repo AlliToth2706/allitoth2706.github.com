@@ -195,7 +195,6 @@ quizMakerContainer.appendChild(questionAddBtn);
 
 addQuestion();
 
-const submitButton = document.getElementById('submit');
 const addQuestionButton = document.getElementById('add-question');
 // Listener for whenever someone clicks the "Add question" button
 addQuestionButton.addEventListener('click', addQuestion);

@@ -200,7 +200,7 @@ submitButton.addEventListener('click', function () {
     for (i = 0; i < elements.length; i++) {
         for (j = 0; j < elements[i].length; j++) {
             if (j == 0) {
-                myQuestions[i].push({question: elements[i][j], options: {}});
+                myQuestions.push({question: elements[i][j], options: {}});
             } else {
                 var letter = String.fromCharCode(96 + j);
                 myQuestions[i][options][`${letter}`] = elements[i][j];

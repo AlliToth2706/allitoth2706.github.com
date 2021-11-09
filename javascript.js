@@ -217,8 +217,10 @@ submitButton.addEventListener('click', function () {
             }
         }
         var correct = String.fromCharCode(96 + elements[i][elements[i].length - 1]);
-        myQuestions[i]["correctOption"] = `${correct}`
+        myQuestions[i]["correctOption"] = `${correct}`;
     }
+
+    console.log(myQuestions);
 
     quizMakerContainer.style.display = 'none';
     submitQuizButton.style.display = 'none';

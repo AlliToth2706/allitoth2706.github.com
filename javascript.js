@@ -120,6 +120,10 @@ function addQuestion() {
     correctOption.setAttribute('name', `option-correct-${question_counter}`);
     correctOption.setAttribute('type', 'text');
 
+    questionInputForm.appendChild(correctOptionLabel);
+    questionInputForm.appendChild(correctOption);
+    questionInputForm.appendChild(document.createElement("br"));
+
     // Creates Option Add Button
     var optionAddBtn = document.createElement('BUTTON');
     optionAddBtn.innerHTML = 'Add Option';

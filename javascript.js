@@ -110,6 +110,16 @@ function addQuestion() {
     questionInputForm.appendChild(optionInput);
     questionInputForm.appendChild(document.createElement("br"));
 
+    // Select correct option
+    var correctOptionLabel = document.createElement('label');
+    correctOptionLabel.setAttribute('for', `option-correct-${question_counter}`);
+    correctOptionLabel.setAttribute('id', `option-correct-${question_counter}-label`);
+    correctOptionLabel.innerHTML = `Correct answer for Question ${question_counter} (must be number)`;
+    var correctOption = document.createElement('input');
+    correctOption.setAttribute('id', `option-correct-${question_counter}`);
+    correctOption.setAttribute('name', `option-correct-${question_counter}`);
+    correctOption.setAttribute('type', 'text');
+
     // Creates Option Add Button
     var optionAddBtn = document.createElement('BUTTON');
     optionAddBtn.innerHTML = 'Add Option';
@@ -198,14 +208,16 @@ submitButton.addEventListener('click', function () {
     }
 
     for (i = 0; i < elements.length; i++) {
-        for (j = 0; j < elements[i].length; j++) {
+        for (j = 0; j < elements[i].length - 1; j++) {
             if (j == 0) {
-                myQuestions.push({question: elements[i][j], options: {}});
+                myQuestions.push({question: elements[i][j], options: {}, correctOption: ""});
             } else {
                 var letter = String.fromCharCode(96 + j);
-                myQuestions[i][options][`${letter}`] = elements[i][j];
+                myQuestions[i]["options"][`${letter}`] = elements[i][j];
             }
         }
+        var correct = String.fromCharCode(96 + elements[i][elements[i].length - 1]);
+        myQuestions[i]["correctOption"] = `${correct}`
     }
 
     quizMakerContainer.style.display = 'none';

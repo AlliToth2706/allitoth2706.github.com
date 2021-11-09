@@ -110,6 +110,15 @@ function addQuestion() {
     questionInputForm.appendChild(optionInput);
     questionInputForm.appendChild(document.createElement("br"));
 
+    // Creates Option Add Button
+    var optionAddBtn = document.createElement('BUTTON');
+    optionAddBtn.innerHTML = 'Add Option';
+    optionAddBtn.setAttribute('id', `add-option-${question_counter}`);
+
+    questionInputForm.appendChild(optionAddBtn);
+    questionInputForm.appendChild(document.createElement("br"));
+    questionInputForm.appendChild(document.createElement("br"));
+
     // Select correct option
     var correctOptionLabel = document.createElement('label');
     correctOptionLabel.setAttribute('for', `option-correct-${question_counter}`);
@@ -122,15 +131,6 @@ function addQuestion() {
 
     questionInputForm.appendChild(correctOptionLabel);
     questionInputForm.appendChild(correctOption);
-    questionInputForm.appendChild(document.createElement("br"));
-
-    // Creates Option Add Button
-    var optionAddBtn = document.createElement('BUTTON');
-    optionAddBtn.innerHTML = 'Add Option';
-    optionAddBtn.setAttribute('id', `add-option-${question_counter}`);
-
-    questionInputForm.appendChild(optionAddBtn);
-    questionInputForm.appendChild(document.createElement("br"));
     questionInputForm.appendChild(document.createElement("br"));
 
     // Adds all into the quiz part

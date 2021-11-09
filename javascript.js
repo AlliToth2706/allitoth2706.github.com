@@ -193,35 +193,33 @@ let elements = []
 let myQuestions = [];
 // Kick things off
 
-$(function() {
-    $("#submit").click(function() {
-        for (i = 1; i < (question_counter + 1); i++) {
-            var x = $(`#question-${i}`).serializeArray();
-            $.each(x, function(j, field) {
-                elements.push([]);
-                elements[i].push(field.value + "");
-            });
-        }
+submitButton.addEventListener('click', function () {
+    for (i = 1; i < (question_counter + 1); i++) {
+        var x = $(`#question-${i}`).serializeArray();
+        $.each(x, function(j, field) {
+            elements.push([]);
+            elements[i].push(field.value + "");
+        });
+    }
 
-        for (i = 0; i < elements.length; i++) {
-            for (j = 0; j < elements[i].length; j++) {
-                if (j == 0) {
-                    myQuestions[i].push({question: elements[i][j], options: {}});
-                } else {
-                    var letter = String.fromCharCode(96 + j);
-                    myQuestions[i][options][`${letter}`] = elements[i][j];
-                }
+    for (i = 0; i < elements.length; i++) {
+        for (j = 0; j < elements[i].length; j++) {
+            if (j == 0) {
+                myQuestions[i].push({question: elements[i][j], options: {}});
+            } else {
+                var letter = String.fromCharCode(96 + j);
+                myQuestions[i][options][`${letter}`] = elements[i][j];
             }
         }
+    }
 
-        quizMakerContainer.style.display = 'none';
-        submitQuizButton.style.display = 'none';
-        quizContainer.style.display = 'block';
-        resultsContainer.style.display = 'block';
+    quizMakerContainer.style.display = 'none';
+    submitQuizButton.style.display = 'none';
+    quizContainer.style.display = 'block';
+    resultsContainer.style.display = 'block';
 
-        buildQuiz();
-        showResults();
-    });
+    buildQuiz();
+    showResults();
 });
 
 })();

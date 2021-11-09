@@ -221,7 +221,7 @@ submitQuizButton.addEventListener('click', function () {
                 myQuestions[i]["options"][`${letter}`] = elements[i][j];
             }
         }
-        var correct = String.fromCharCode(96 + elements[i][elements[i].length - 1]);
+        var correct = String.fromCharCode(96 + parseInt(elements[i][elements[i].length - 1]));
         myQuestions[i]["correctOption"] = `${correct}`;
     }
 

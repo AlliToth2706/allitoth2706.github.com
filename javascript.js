@@ -193,7 +193,7 @@ submitButton.addEventListener('click', function () {
         var x = $(`#question-${i}`).serializeArray();
         elements.push([]);
         $.each(x, function(j, field) {
-            elements[i].push(field.value + "");
+            elements[i - 1].push(field.value + "");
         });
     }
 

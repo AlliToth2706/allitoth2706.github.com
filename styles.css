@@ -35,3 +35,55 @@ label[id^=option] {
 label {
     padding-right: 0.5rem;
 }
+
+:root {
+	font-family: arial, sans-serif;
+	--table-height: 2rem;
+	--table-width: 18%;
+}
+
+.main {
+	display: flex;
+}
+
+table,
+th,
+td {
+	border: 1px solid black;
+}
+
+th,
+td {
+	height: 2rem;
+}
+
+table {
+	border-collapse: collapse;
+	width: 100%;
+}
+
+.timetable {
+	position: relative;
+	z-index: -1;
+	align-self: flex-end;
+	flex: 70%;
+	margin-right: 2%;
+}
+
+.options {
+	flex: auto;
+	align-items: center;
+	margin-left: 2%;
+}
+
+div.times {
+	width: var(--table-width);
+	position: absolute;
+	z-index: 1;
+	opacity: 90%;
+	border-radius: 10px;
+}
+
+h1 {
+	text-align: center;
+}

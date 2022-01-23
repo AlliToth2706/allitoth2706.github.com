@@ -82,6 +82,10 @@ div.times {
 	z-index: 1;
 	opacity: 90%;
 	border-radius: 10px;
+	text-align: center;
+	padding: 10px 5px;
+	box-sizing: border-box;
+	font-weight: bold;
 }
 
 h1 {

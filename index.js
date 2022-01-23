@@ -96,6 +96,7 @@ function setCSS(elem, currentInfo) {
 	elem.style.left = setLeft;
 	elem.style.top = setTop;
 	elem.style.background = color;
+	elem.innerHTML = currentInfo.name;
 }
 
 function needSelections() {
@@ -151,6 +152,7 @@ function submitForm(form) {
 			time: time.time,
 			duration: class_.duration,
 			color: class_.color,
+			name: class_.name + ' ' + class_.type,
 		};
 
 		if (usedTimes && usedTimes.some((el) => checkParams(el, current_info))) {

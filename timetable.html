@@ -1,25 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<meta charset="UTF-15" />
+		<meta charset="UTF-8" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Document</title>
+		<title>RMIT CS/SE Timetable Visualiser</title>
 		<link rel="stylesheet" type="text/css" href="./styles.css" />
-		<script defer src="./index.js"></script>
+		<script defer src="timetable.js"></script>
 	</head>
 	<body>
 		<h1>CS SE 2nd year Sem 1 - Timetable</h1>
 		<div class="main">
 			<div class="options">
+				<h2>Classes</h2>
 				<form
 					action=""
 					name="timetable-options"
 					method="get"
-					id="timetable-form"
-				>
-					<input type="button" value="Submit" onClick="submitForm(this.form)" />
-				</form>
+					id="timetable-form-1"
+				></form>
+				<br />
+				<hr />
+				<h2>Options</h2>
+				<form
+					action=""
+					name="timetable-options-2"
+					method="get"
+					id="timetable-form-2"
+				></form>
 			</div>
 			<div class="timetable">
 				<div class="times" id="d0"></div>
@@ -28,6 +36,8 @@
 				<div class="times" id="d3"></div>
 				<div class="times" id="d4"></div>
 				<div class="times" id="d5"></div>
+				<div class="times" id="d6"></div>
+				<div class="times" id="d7"></div>
 				<table class="timetable-table">
 					<colgroup>
 						<col span="1" style="width: 10%" />

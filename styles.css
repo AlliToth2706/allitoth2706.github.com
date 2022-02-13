@@ -88,6 +88,14 @@ div.times {
 	font-weight: bold;
 }
 
+div.times > p {
+	opacity: 1;
+}
+
 h1 {
 	text-align: center;
+}
+
+select {
+	width: 180px;
 }

@@ -2,7 +2,13 @@
 import { getUsers } from './accounts';
 // import env from 'react-dotenv';
 
-const LS_FOLLOWS = "follows";
+const LS_FOLLOWS = 'follows';
+
+const initialiseFollows = () => {
+    if (localStorage.getItem(LS_FOLLOWS) !== null) return;
+
+    setFollows({});
+};
 
 /**
  * Get a list of all of the users the given user follows
@@ -26,17 +32,17 @@ const getFollows = (email) => {
 
 const getAllFollows = () => {
     return JSON.parse(localStorage.getItem(LS_FOLLOWS));
-}
+};
 
 const setFollows = (data) => {
     localStorage.setItem(LS_FOLLOWS, JSON.stringify(data));
-}
+};
 
 const setFollowsOfUser = (email, data) => {
     const allFollows = getAllFollows();
     allFollows[email] = data;
     setFollows(allFollows);
-}
+};
 
 /**
  * Get a list of all of the users the given user is followed by
@@ -46,7 +52,6 @@ const setFollowsOfUser = (email, data) => {
 const getFollowsTo = (email) => {
     // try {
     //     let follows = (await client.get(`/to/${email}`)).data;
-
     //     // Turns the array of objects into an array of strings
     //     return follows.map((e) => {
     //         return e.from_email;
@@ -109,11 +114,11 @@ const addFollow = (from_email, to_email) => {
     // } catch (e) {
     //     return e?.response.status ?? 0;
     // }
-    
+
     const allFollows = getAllFollows();
     const follows = allFollows[from_email] ?? [];
     follows.push(to_email);
-    setFollowsOfUser(from_email, user)
+    setFollowsOfUser(from_email, user);
 
     // todo: see if need to actually return anything from here
 };
@@ -142,4 +147,4 @@ const removeFollow = async (from_email, to_email) => {
     setFollowsOfUser(from_email, follows);
 };
 
-export { getFollows, getFollowsTo, getNotFollowing, addFollow, removeFollow, getFollow };
+export { getFollows, getFollowsTo, getNotFollowing, addFollow, removeFollow, getFollow, initialiseFollows };

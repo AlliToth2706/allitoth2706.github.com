@@ -16,6 +16,7 @@ const getAllPosts = () => {
  */
 const createPost = (info) => {
     let posts = getAllPosts();
+    info.timestamp = new Date();
     posts.push(info);
 
     replacePosts(posts);
@@ -229,5 +230,5 @@ export {
     addReply,
     editReply,
     removeReply,
-    upload
+    upload,
 };

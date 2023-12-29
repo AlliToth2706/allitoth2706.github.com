@@ -1,4 +1,5 @@
 import { getDetails, setDefaultDetails, changeDetails } from './account-details';
+import { initialiseFollows } from './following';
 import { createPost } from './posts';
 
 // Constants for localStorage
@@ -9,16 +10,16 @@ const LS_USER = 'user';
  * Initialises the localStorage so that there is some information already available.
  */
 const initialise = () => {
-    // Don't create new localStorage if there already is some that exist
+    // Don't create new localStorage if has already been created
     if (localStorage.getItem(LS_USERS) !== null) return;
 
-    // Create some default users for testing
+    // Create a default user for testing
     const users = [
         {
             username: 'allitoth',
             email: 'allitoth2706@outlook.com',
             password: 'abc123',
-            visits: 0
+            visits: 0,
         },
     ];
 
@@ -28,15 +29,16 @@ const initialise = () => {
     // Add default bio information
     setDefaultDetails('allitoth');
 
-    // Create some default posts
+    // Create a default post
     createPost({
         username: 'allitoth',
         main: 'Hello world!',
-        timestamp: new Date(),
         comments: [],
         like: [],
         image: '',
     });
+
+    initialiseFollows();
 };
 
 /**
@@ -170,13 +172,13 @@ function deleteAccount(username) {
  */
 function addProfileVisit(username) {
     const users = getUsers();
-    console.log(e)
+    console.log(e);
     for (const e of users) {
         if (e.username === username) {
             ++e.visits;
         }
     }
-    console.log(e)
+    console.log(e);
 }
 
 // TODO: Add initialise back

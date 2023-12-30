@@ -91,7 +91,7 @@ const SignupDialog = ({ login, isOpen, onClose }) => {
             return;
         }
 
-        let verification = await signUpUser(user);
+        let verification = /*await*/ signUpUser(user);
         // Sign up the user and check if was successful
         if (verification === true) {
             // Sets the user in localStorage
@@ -142,7 +142,7 @@ const SignupDialog = ({ login, isOpen, onClose }) => {
 
     return (
         <>
-            <Modal heading='Sign up' isOpen={isOpen} onClose={onClose}>
+            <Modal heading="Sign up" isOpen={isOpen} onClose={onClose}>
                 <form
                     onSubmit={(e) => {
                         e.preventDefault();
@@ -152,11 +152,11 @@ const SignupDialog = ({ login, isOpen, onClose }) => {
                     <FormControl mb={2} isInvalid={isValidEmail == null ? false : !isValidEmail}>
                         <FormLabel>Email</FormLabel>
                         <Input
-                            type='email'
-                            name='email'
+                            type="email"
+                            name="email"
                             value={user.email}
                             onChange={handleChange}
-                            placeholder='Email'
+                            placeholder="Email"
                         />
                         {isValidEmail ? (
                             <FormHelperText>Email is valid</FormHelperText>
@@ -166,22 +166,22 @@ const SignupDialog = ({ login, isOpen, onClose }) => {
                     </FormControl>
                     <FormControl mb={2}>
                         <FormLabel>Name</FormLabel>
-                        <Flex direction='row'>
+                        <Flex direction="row">
                             <Input
-                                type='text'
-                                name='first_name'
+                                type="text"
+                                name="first_name"
                                 value={user.first_name}
                                 onChange={handleChange}
                                 mr={1}
-                                placeholder='First name'
+                                placeholder="First name"
                             />
                             <Input
-                                type='text'
-                                name='last_name'
+                                type="text"
+                                name="last_name"
                                 value={user.last_name}
                                 onChange={handleChange}
                                 ml={1}
-                                placeholder='Last name'
+                                placeholder="Last name"
                             />
                         </Flex>
                     </FormControl>
@@ -191,11 +191,11 @@ const SignupDialog = ({ login, isOpen, onClose }) => {
                     >
                         <FormLabel>Password</FormLabel>
                         <Input
-                            type='password'
-                            name='password'
+                            type="password"
+                            name="password"
                             value={user.password}
                             onChange={handleChange}
-                            placeholder='Password'
+                            placeholder="Password"
                         />
                         {user.password.length > 20 ? (
                             <FormErrorMessage>
@@ -207,8 +207,8 @@ const SignupDialog = ({ login, isOpen, onClose }) => {
                             passStrength === 'w' && (
                                 <FormErrorMessage>
                                     Password is not strong. Please use a strong password for security.
-                                    <Tooltip label='A strong password consists of at least 8 characters, which should include at least one lowercase letter, uppercase letter, number, and special character (e.g. !*&^)'>
-                                        <Box className='material-icons' sx={{ cursor: 'pointer' }}>
+                                    <Tooltip label="A strong password consists of at least 8 characters, which should include at least one lowercase letter, uppercase letter, number, and special character (e.g. !*&^)">
+                                        <Box className="material-icons" sx={{ cursor: 'pointer' }}>
                                             help_outline
                                         </Box>
                                     </Tooltip>
@@ -216,7 +216,7 @@ const SignupDialog = ({ login, isOpen, onClose }) => {
                             )
                         )}
                     </FormControl>
-                    <Button type='submit'>Submit</Button>
+                    <Button type="submit">Submit</Button>
                 </form>
             </Modal>
         </>

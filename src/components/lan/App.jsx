@@ -3,7 +3,8 @@ import { ChakraProvider, extendTheme, theme, ColorModeScript } from '@chakra-ui/
 import { Routing } from './Components';
 
 import customTheme from './Theme';
-import Filter from 'bad-words'
+import Filter from 'bad-words';
+import { initialise } from './Data/accounts';
 /*
  * Universal exports
  *
@@ -23,10 +24,12 @@ const passwordRegex = new RegExp('^(?=.*[A-Z])(?=.*[!@#$&*])(?=.*[0-9])(?=.*[a-z
 // Make sure that everywhere has access to the currently logged in user.
 const UserContext = createContext();
 
-const textFilter = new Filter()
+const textFilter = new Filter();
 
 // Max posting length
 const maxPostLength = 600;
+
+initialise();
 
 /**
  * Main app.

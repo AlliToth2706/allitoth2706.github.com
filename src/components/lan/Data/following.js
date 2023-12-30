@@ -5,6 +5,7 @@ import { getUsers } from './accounts';
 const LS_FOLLOWS = 'follows';
 
 const initialiseFollows = () => {
+    // console.log(localStorage.getItem(LS_FOLLOWS));
     if (localStorage.getItem(LS_FOLLOWS) !== null) return;
 
     setFollows({});
@@ -27,6 +28,7 @@ const getFollows = (email) => {
     //     return e?.response.status ?? 0;
     // }
     const allFollows = getAllFollows();
+    // console.log(allFollows);
     return allFollows[email];
 };
 
@@ -63,7 +65,7 @@ const getFollowsTo = (email) => {
 };
 
 /**
- * Get a list of all of the users the given user is followed by
+ * Get if user is following another user
  * @param {string} from_email Email of the user that is the follower
  * @param {string} to_email Email of the user that is followed
  * @returns {boolean | number} If follow relation exists
@@ -76,6 +78,7 @@ const getFollow = (from_email, to_email) => {
     //     return e?.response?.status ?? 0;
     // }
     // todo: code this
+    return true;
 };
 
 /**
@@ -116,9 +119,10 @@ const addFollow = (from_email, to_email) => {
     // }
 
     const allFollows = getAllFollows();
+    // console.log(allFollows);
     const follows = allFollows[from_email] ?? [];
     follows.push(to_email);
-    setFollowsOfUser(from_email, user);
+    setFollowsOfUser(from_email, follows);
 
     // todo: see if need to actually return anything from here
 };

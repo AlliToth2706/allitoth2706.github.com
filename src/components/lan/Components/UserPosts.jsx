@@ -11,7 +11,7 @@ const UserPosts = ({ user }) => {
 
     useEffect(() => {
         (async () => {
-            let p = await getAllPosts();
+            let p = /*await*/ getAllPosts();
             p = p
                 .map((e) => {
                     e.comments = e.comments
@@ -32,7 +32,7 @@ const UserPosts = ({ user }) => {
         <Loading bool={posts}>
             {posts?.map((e, i) => {
                 return (
-                    <Flex key={i} w='50%'>
+                    <Flex key={i} w="50%">
                         <Post post={e} readOnly={true} />
                     </Flex>
                 );

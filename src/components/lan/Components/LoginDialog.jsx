@@ -59,7 +59,7 @@ const LoginDialog = ({ login, isOpen, onClose }) => {
         }
 
         // login unsuccessful
-        let verification = await verifyUser(user.email, user.password);
+        let verification = /*await*/ verifyUser(user.email, user.password);
 
         if (verification === 401) {
             toast({
@@ -98,7 +98,6 @@ const LoginDialog = ({ login, isOpen, onClose }) => {
 
         toast({
             title: "You're logged in.",
-            // description: "We've created your account for you.",
             status: 'success',
             duration: longToastTime,
             isClosable: true,
@@ -110,7 +109,7 @@ const LoginDialog = ({ login, isOpen, onClose }) => {
 
     return (
         <>
-            <Modal isOpen={isOpen} onClose={onClose} heading='Login'>
+            <Modal isOpen={isOpen} onClose={onClose} heading="Login">
                 <form
                     onSubmit={(e) => {
                         e.preventDefault();
@@ -120,11 +119,11 @@ const LoginDialog = ({ login, isOpen, onClose }) => {
                     <FormControl mb={2} isInvalid={isValidEmail == null ? false : !isValidEmail}>
                         <FormLabel>Email</FormLabel>
                         <Input
-                            type='email'
-                            name='email'
+                            type="email"
+                            name="email"
                             value={user.email}
                             onChange={handleChange}
-                            placeholder='Email'
+                            placeholder="Email"
                         />
                         {isValidEmail ? (
                             <FormHelperText>Email is valid</FormHelperText>
@@ -135,14 +134,14 @@ const LoginDialog = ({ login, isOpen, onClose }) => {
                     <FormControl mb={2}>
                         <FormLabel>Password</FormLabel>
                         <Input
-                            type='password'
-                            name='password'
+                            type="password"
+                            name="password"
                             value={user.password}
                             onChange={handleChange}
-                            placeholder='Password'
+                            placeholder="Password"
                         />
                     </FormControl>
-                    <Button type='submit'>Submit</Button>
+                    <Button type="submit">Submit</Button>
                 </form>
             </Modal>
         </>

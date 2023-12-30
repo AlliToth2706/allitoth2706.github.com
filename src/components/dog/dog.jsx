@@ -3,15 +3,21 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Form from './Form';
 import Info from './Info';
 
-export default function Test() {
+export default function Dog() {
     return (
         <ChakraProvider>
-            <BrowserRouter>
                 <Routes>
-                    <Route path="/dog" element={<Form />}></Route>
-                    <Route path="/dog/info" element={<Info />}></Route>
+                    <Route path="/" element={<Form />}></Route>
+                    <Route path="info" element={<Info />}></Route>
                 </Routes>
-            </BrowserRouter>
         </ChakraProvider>
     );
+}
+
+const router = createMemoryRouter([{ path: '*', Component: Dog }], {
+    initialEntries: ['/'],
+});
+
+export default function App() {
+    return <RouterProvider router={router} />;
 }

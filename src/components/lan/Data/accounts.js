@@ -12,14 +12,16 @@ const LS_USER = 'user';
 const initialise = () => {
     // Don't create new localStorage if has already been created
     if (localStorage.getItem(LS_USERS) !== null) return;
+    console.log('initialising...');
 
     // Create a default user for testing
     const users = [
         {
-            username: 'allitoth',
             email: 'allitoth2706@outlook.com',
             password: 'abc123',
             visits: 0,
+            first_name: 'alli',
+            last_name: 'toth',
         },
     ];
 
@@ -27,11 +29,11 @@ const initialise = () => {
     setUsers(users);
 
     // Add default bio information
-    setDefaultDetails('allitoth');
+    setDefaultDetails('allitoth2706@outlook.com');
 
     // Create a default post
     createPost({
-        username: 'allitoth',
+        email: 'allitoth2706@outlook.com',
         main: 'Hello world!',
         comments: [],
         like: [],
@@ -43,25 +45,25 @@ const initialise = () => {
 
 /**
  * The function description goes here.
- * @param {string} user - The username of the person whose email is being changed
  * @param {string} email - The email to change to
  */
-const changeEmail = (user, email) => {
-    let users = getUsers();
-    users[users.findIndex((e) => e.username === user)].email = email;
+// const changeEmail = (user, email) => {
+//     let users = getUsers();
+//     // users[users.findIndex((e) => e.username === user)].email = email;
+//     users[users.findIndex((e) => e.email === email)].email = email;
 
-    setUsers(users);
-};
+//     setUsers(users);
+// };
 
 /**
  * Getter for the email of the user given.
  * @param {string} user - The username of the user whose email is being got
  * @return {string} The email of the user given
  */
-const getUserEmail = (user) => {
-    let users = getUsers();
-    return users[users.findIndex((e) => e.username === user)].email;
-};
+// const getUserEmail = (user) => {
+//     let users = getUsers();
+//     return users[users.findIndex((e) => e.username === user)].email;
+// };
 
 /**
  * Sets the users in localStorage with the given array.
@@ -91,7 +93,7 @@ const verifyUser = (email, pass) => {
     for (const e of getUsers()) {
         if (email === e.email && pass === e.password) {
             console.log('success');
-            setUser(e.username);
+            setUser(e.email);
             return true;
         }
     }
@@ -123,7 +125,7 @@ const signUpUser = (userInfo) => {
     setUsers(users);
 
     // Set the current user
-    setUser(userInfo.username);
+    setUser(userInfo.email);
 
     // Sets the information that displays in the Profile component
     setDefaultDetails(userInfo.username);
@@ -159,7 +161,7 @@ function removeUser() {
  */
 function deleteAccount(username) {
     let users = getUsers();
-    let newUsers = users.filter((e) => e.username !== username);
+    let newUsers = users.filter((e) => e.email !== username);
 
     setUsers(newUsers);
     removeUser();
@@ -172,16 +174,14 @@ function deleteAccount(username) {
  */
 function addProfileVisit(username) {
     const users = getUsers();
-    console.log(e);
+    // console.log(users);
     for (const e of users) {
-        if (e.username === username) {
+        if (e.email === username) {
             ++e.visits;
         }
     }
-    console.log(e);
+    // console.log(users);
 }
-
-// TODO: Add initialise back
 
 export {
     initialise,
@@ -190,8 +190,8 @@ export {
     removeUser,
     signUpUser,
     deleteAccount,
-    changeEmail,
-    getUserEmail,
+    // changeEmail,
+    // getUserEmail,
     getDetails as getUserInfo,
     changeDetails as editUserInfo,
     getUsers,

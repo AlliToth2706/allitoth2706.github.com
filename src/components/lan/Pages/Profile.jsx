@@ -47,7 +47,7 @@ const EditProfile = ({ setUser }) => {
     // Gets the initial information
     useEffect(() => {
         (async () => {
-            let userDetails = await getUserInfo(User);
+            let userDetails = /*await*/ getUserInfo(User);
             setInitialInformation(userDetails);
         })();
     }, [User]);
@@ -109,7 +109,7 @@ const EditProfile = ({ setUser }) => {
         }
 
         // Set the changed information
-        let worked = await editUserInfo({ ...initialInformation, ...editingInformation });
+        let worked = /*await*/ editUserInfo({ ...initialInformation, ...editingInformation });
         if (!worked) {
             toast({
                 title: 'An error occurred.',
@@ -131,14 +131,14 @@ const EditProfile = ({ setUser }) => {
         // Close out of modal
         onCloseModal();
 
-        setInitialInformation(await getUserInfo(initialInformation.email));
+        setInitialInformation(/*await*/ getUserInfo(initialInformation.email));
     };
 
     return (
         <>
             {/* Alert dialogue for account deletion */}
             <Alert
-                heading='Delete Account'
+                heading="Delete Account"
                 onClick={() => {
                     deleteAccount(User);
                     onCloseAlert();
@@ -150,50 +150,50 @@ const EditProfile = ({ setUser }) => {
             />
 
             {/* Modal for editing info */}
-            <Modal isOpen={isOpenModal} onClose={onCloseModal} heading='Edit Profile'>
+            <Modal isOpen={isOpenModal} onClose={onCloseModal} heading="Edit Profile">
                 <form onSubmit={handleSubmit}>
                     <FormControl mb={2}>
                         <FormLabel>Name</FormLabel>
-                        <Flex direction='row'>
+                        <Flex direction="row">
                             <Input
-                                type='text'
-                                name='first_name'
+                                type="text"
+                                name="first_name"
                                 value={editingInformation.first_name}
                                 onChange={handleChange}
                                 mr={1}
-                                placeholder='First name'
+                                placeholder="First name"
                             />
                             <Input
-                                type='text'
-                                name='last_name'
+                                type="text"
+                                name="last_name"
                                 value={editingInformation.last_name}
                                 onChange={handleChange}
                                 ml={1}
-                                placeholder='Last name'
+                                placeholder="Last name"
                             />
                         </Flex>
                     </FormControl>
                     <FormControl mb={2} isInvalid={isValidLink == null ? false : !isValidLink}>
                         <FormLabel>Avatar</FormLabel>
                         <Input
-                            type='url'
-                            name='avatar'
+                            type="url"
+                            name="avatar"
                             value={editingInformation.avatar ?? ''}
                             onChange={handleChange}
-                            placeholder='Avatar URL'
+                            placeholder="Avatar URL"
                         />
                     </FormControl>
 
                     {JSON.stringify(editingInformation) === JSON.stringify(initialInformation) ? (
                         <Button onClick={onCloseModal}>Cancel</Button>
                     ) : (
-                        <Button type='submit'>Submit</Button>
+                        <Button type="submit">Submit</Button>
                     )}
                 </form>
             </Modal>
             <ButtonGroup gap={2}>
                 <Button onClick={onOpenModal}>Edit</Button>
-                <Button colorScheme='red' onClick={onOpenAlert}>
+                <Button colorScheme="red" onClick={onOpenAlert}>
                     Delete
                 </Button>
             </ButtonGroup>
@@ -227,18 +227,20 @@ const Profile = ({ setUser }) => {
 
     // Gets information from the database
     useEffect(() => {
-        (async () => {
-            // Gets the users that the current user is following, and the users that are following the user
+        // (async () => {
+        // Gets the users that the current user is following, and the users that are following the user
 
-            setFollowings(await getFollows(User));
-            setFollowers(await getFollowsTo(User));
+        setFollowings(/*await*/ getFollows(User));
+        setFollowers(/*await*/ getFollowsTo(User));
 
-            // Get all of the users
-            setUsers(await getUsers());
-        })();
+        // Get all of the users
+        setUsers(/*await*/ getUsers());
+        console.log(getUsers());
+        // })();
 
         // Sets the follow state
-        if (User !== loggedInUser && isFollowed == null) getFollow(loggedInUser, User).then((e) => setIsFollowed(e));
+        // if (User !== loggedInUser && isFollowed == null) getFollow(loggedInUser, User).then((e) => setIsFollowed(e));
+        if (User !== loggedInUser && isFollowed == null) setIsFollowed(getFollow(loggedInUser, User));
 
         // On unmount, close the modal if it is open
         return onClose;
@@ -249,9 +251,11 @@ const Profile = ({ setUser }) => {
             <Modal
                 isOpen={isOpen}
                 onClose={onClose}
-                heading={open === 0 ? `Following (${followings?.length})` : `Followers (${followers?.length})`}
+                heading={
+                    open === 0 ? `Following (${followings?.length ?? 0})` : `Followers (${followers?.length ?? 0})`
+                }
             >
-                <Tabs variant='enclosed' isFitted onChange={(index) => setOpen(index)} defaultIndex={open}>
+                <Tabs variant="enclosed" isFitted onChange={(index) => setOpen(index)} defaultIndex={open}>
                     <TabList>
                         <Tab>Following</Tab>
                         <Tab>Followers</Tab>
@@ -259,7 +263,7 @@ const Profile = ({ setUser }) => {
 
                     <TabPanels>
                         <TabPanel>
-                            <Flex direction='column'>
+                            <Flex direction="column">
                                 {followings?.length > 0 ? (
                                     followings?.map((user, i) => {
                                         return (
@@ -272,7 +276,9 @@ const Profile = ({ setUser }) => {
                                         );
                                     })
                                 ) : (
-                                    <Text>{(User === loggedInUser?"You're":`${u.first_name} is`)} not following anyone.</Text>
+                                    <Text>
+                                        {User === loggedInUser ? "You're" : `${u.first_name} is`} not following anyone.
+                                    </Text>
                                 )}
                             </Flex>
                         </TabPanel>
@@ -299,17 +305,17 @@ const Profile = ({ setUser }) => {
             {/* Profile area */}
 
             {users ? (
-                <Flex h='full' w='full' direction='column'>
-                    <Flex direction='row' wrap='wrap' justify='space-around' align='center' w='full' h='full' mt='10%'>
-                        <Flex textAlign='left' justify='center'>
-                            <Avatar name={`${u.first_name} ${u.last_name}`} src={u.avatar} w={60} h={60} size='2xl' />
+                <Flex h="full" w="full" direction="column">
+                    <Flex direction="row" wrap="wrap" justify="space-around" align="center" w="full" h="full" mt="10%">
+                        <Flex textAlign="left" justify="center">
+                            <Avatar name={`${u.first_name} ${u.last_name}`} src={u.avatar} w={60} h={60} size="2xl" />
                         </Flex>
 
-                        <Box textAlign='left'>
-                            <Flex direction='row' mb={4}>
+                        <Box textAlign="left">
+                            <Flex direction="row" mb={4}>
                                 <ButtonGroup gap={2}>
                                     <Button
-                                        variant='link'
+                                        variant="link"
                                         onClick={() => {
                                             setOpen(0);
                                             onOpen();
@@ -318,7 +324,7 @@ const Profile = ({ setUser }) => {
                                         {followings?.length ?? 0} Following
                                     </Button>
                                     <Button
-                                        variant='link'
+                                        variant="link"
                                         onClick={() => {
                                             setOpen(1);
                                             onOpen();
@@ -333,17 +339,17 @@ const Profile = ({ setUser }) => {
                                 <br />
                                 Email: {u.email}
                                 <br />
-                                Account created: {new Date(u.createdAt).toLocaleString()}
+                                Account created: {new Date(u.time).toLocaleString()}
                             </Text>
                             <br />
 
                             {User === loggedInUser ? (
                                 <EditProfile setUser={setUser} />
                             ) : isFollowed == null ? (
-                                <Spinner size='xl' />
+                                <Spinner size="xl" />
                             ) : (
                                 <FollowButton
-                                    size='md'
+                                    size="md"
                                     from_user={loggedInUser}
                                     to_user={User}
                                     state={isFollowed}
@@ -353,10 +359,10 @@ const Profile = ({ setUser }) => {
                         </Box>
                     </Flex>
 
-                    <Flex direction='column' justify='center' align='center' mt={20} mb='5%'>
+                    <Flex direction="column" justify="center" align="center" mt={20} mb="5%">
                         {User === loggedInUser || isFollowed ? (
                             <>
-                                <Heading size='lg'>
+                                <Heading size="lg">
                                     Posts by {u.first_name} {u.last_name}
                                 </Heading>
                                 <UserPosts user={User} />
@@ -365,8 +371,8 @@ const Profile = ({ setUser }) => {
                     </Flex>
                 </Flex>
             ) : (
-                <Flex h='full' w='full' direction='column' align='center'>
-                    <Spinner size='xl' />
+                <Flex h="full" w="full" direction="column" align="center">
+                    <Spinner size="xl" />
                 </Flex>
             )}
         </>
@@ -378,20 +384,21 @@ const UserPanel = ({ user, shouldShowFollow }) => {
     const [isFollowed, setIsFollowed] = useState(null);
 
     useEffect(() => {
-        if (isFollowed == null) getFollow(User, user.email).then((e) => setIsFollowed(e));
+        // if (isFollowed == null) getFollow(User, user.email).then((e) => setIsFollowed(e));
+        if (isFollowed == null) setIsFollowed(getFollow(User, user.email));
     }, [isFollowed, User, user]);
 
     return (
-        <Flex direction='row' align='center' mb={2}>
-            <AvatarButton user={user} size='md' margin='0 10px' />
-            <Text as='b' fontSize='lg'>
+        <Flex direction="row" align="center" mb={2}>
+            <AvatarButton user={user} size="md" margin="0 10px" />
+            <Text as="b" fontSize="lg">
                 {user.first_name} {user.last_name}
             </Text>
             {shouldShowFollow && (
                 <>
                     <Spacer />
                     {isFollowed == null ? (
-                        <Spinner size='xl' />
+                        <Spinner size="xl" />
                     ) : (
                         <FollowButton
                             from_user={User}

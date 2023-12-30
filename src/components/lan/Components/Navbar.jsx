@@ -16,12 +16,12 @@ const NavbarLink = ({ children, onClick, to, variant, label }) => {
                     as={Link}
                     to={to === pathname ? '/' : to}
                     variant={to === pathname ? 'inverse' : 'navbar'}
-                    className='material-icons'
+                    className="material-icons"
                 >
                     {children}
                 </Button>
             ) : (
-                <Button variant='navbar' className='material-icons' onClick={onClick}>
+                <Button variant="navbar" className="material-icons" onClick={onClick}>
                     {children}
                 </Button>
             )}
@@ -43,9 +43,9 @@ const Navbar = ({ setUser, signup, login }) => {
     };
 
     return (
-        <Flex as='nav' align='center' variant='branding'>
+        <Flex as="nav" align="center" variant="branding">
             {/* Branding */}
-            <Button as={Link} to='/' variant='invisible'>
+            <Button as={Link} to="/" variant="invisible">
                 {/* <Logo
                     style={{
                         fill: colorMode === 'light' ? 'black' : 'white',
@@ -53,37 +53,37 @@ const Navbar = ({ setUser, signup, login }) => {
                         height: '50px',
                     }}
                 /> */}
-                <Text variant='branding' ml={4}>
+                <Text variant="branding" ml={4}>
                     Loop Agile Now
                 </Text>
             </Button>
 
             <Spacer />
 
-            <Box className='nav-menu'>
+            <Box className="nav-menu">
                 {/* Decides if the logged in or logged out navbar versions should be shown */}
-                <ButtonGroup gap={2} pr='1rem'>
+                <ButtonGroup gap={2} pr="1rem">
                     {User ? (
                         // Logged in navbar
                         <>
-                            <NavbarLink to='/profile' variant='link' label='View Profile'>
+                            <NavbarLink to="/profile" variant="link" label="View Profile">
                                 manage_accounts
                             </NavbarLink>
 
-                            <NavbarLink to='/forums' variant='link' label='Forums'>
+                            <NavbarLink to="/forums" variant="link" label="Forums">
                                 forum
                             </NavbarLink>
-                            <NavbarLink to='/navbar' onClick={logout} label='Log out'>
+                            <NavbarLink to="/" onClick={logout} label="Log out">
                                 person_remove
                             </NavbarLink>
                         </>
                     ) : (
                         // Logged out navbar
                         <>
-                            <NavbarLink onClick={signup} label='Sign Up'>
+                            <NavbarLink onClick={signup} label="Sign Up">
                                 person_add
                             </NavbarLink>
-                            <NavbarLink onClick={login} label='Login'>
+                            <NavbarLink onClick={login} label="Login">
                                 person
                             </NavbarLink>
                         </>

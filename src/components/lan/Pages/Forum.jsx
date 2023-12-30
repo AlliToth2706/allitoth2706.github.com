@@ -17,18 +17,19 @@ const Forum = () => {
     }, []);
 
     const syncCurrentPosts = async () => {
-        getAllPosts().then((e) => {
-            if (Array.isArray(e)) setPosts(e)
-        });
+        // getAllPosts().then((e) => {
+        const currentPosts = getAllPosts();
+        if (Array.isArray(currentPosts)) setPosts(currentPosts);
+        // });
     };
 
     return (
         <>
-            <Flex w='full' align='center' justify='center' direction='column' p='2rem 0'>
+            <Flex w="full" align="center" justify="center" direction="column" p="2rem 0">
                 <NewPostForm syncCurrentPosts={syncCurrentPosts} />
-                <Divider m='40px 0' />
+                <Divider m="40px 0" />
                 <Loading bool={posts}>
-                    <Flex align='center' justify='center' direction='column' w='75%'>
+                    <Flex align="center" justify="center" direction="column" w="75%">
                         <Heading>Posts</Heading>
                         {posts?.map((post, i) => {
                             return (

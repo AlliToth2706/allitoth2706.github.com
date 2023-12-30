@@ -10,18 +10,19 @@ import Quill from './Quill';
 /**
  * The form for users to add comments to posts.
  */
+// TODO: find out what is making it look weird here
 const CommentForm = ({ parent_id, setIsReplying, syncCurrentPosts }) => {
     const User = useContext(UserContext);
     const [isInvalid, setIsInvalid] = useState(false);
-    
+
     // Makes an array with the length of posts to hold the comments
     const [newComment, setNewComment] = useState('');
-    
+
     const handleQuillChange = (inputText, failing) => {
         setNewComment(inputText);
         setIsInvalid(failing);
     };
-    
+
     const handleSubmit = (e) => {
         e.preventDefault();
 
@@ -38,20 +39,14 @@ const CommentForm = ({ parent_id, setIsReplying, syncCurrentPosts }) => {
 
     return (
         <form onSubmit={handleSubmit}>
-            <Flex
-                as={FormControl}
-                direction='row'
-                align='center'
-                justify='center'
-                isInvalid={isInvalid}
-            >
+            <Flex as={FormControl} direction="row" align="center" justify="center" isInvalid={isInvalid}>
                 <Quill
                     value={newComment}
                     textCallback={handleQuillChange}
-                    minW='15rem'
+                    minW="15rem"
                     container={`comments-${parent_id}`}
                 />
-                <Button type='submit' ml={4} mw={0}>
+                <Button type="submit" ml={4} mw={0}>
                     Submit
                 </Button>
             </Flex>
@@ -73,7 +68,7 @@ const EditComment = ({ data, setEditing, syncCurrentPosts }) => {
 
     const { isOpen, onOpen, onClose } = useDisclosure();
     const [isInvalid, setIsInvalid] = useState(false);
-    
+
     const handleQuillChange = (inputText, failing) => {
         setComment(inputText);
         setIsInvalid(failing);
@@ -100,7 +95,7 @@ const EditComment = ({ data, setEditing, syncCurrentPosts }) => {
     return (
         <>
             <Alert
-                heading='Delete Comment?'
+                heading="Delete Comment?"
                 onClick={() => {
                     removePost(data.post_id, syncCurrentPosts);
                     setEditing(false);
@@ -109,7 +104,7 @@ const EditComment = ({ data, setEditing, syncCurrentPosts }) => {
                 isOpen={isOpen}
                 onClose={onClose}
             />
-            <Box as='form' onSubmit={handleSubmit} ml={4} mt={2}>
+            <Box as="form" onSubmit={handleSubmit} ml={4} mt={2}>
                 <FormControl isRequired={true} mb={2}>
                     <Quill value={comment} textCallback={handleQuillChange} container={`edit-comment`} />
                 </FormControl>
@@ -118,9 +113,9 @@ const EditComment = ({ data, setEditing, syncCurrentPosts }) => {
                     {comment === data.text ? (
                         <Button onClick={() => setEditing(false)}>Cancel</Button>
                     ) : (
-                        <Button type='submit'>Submit</Button>
+                        <Button type="submit">Submit</Button>
                     )}
-                    <Button colorScheme='red' onClick={onOpen}>
+                    <Button colorScheme="red" onClick={onOpen}>
                         Delete
                     </Button>
                 </ButtonGroup>
@@ -144,18 +139,18 @@ const Comment = ({ data, isReply, syncCurrentPosts, readOnly }) => {
         <>
             {data.deleted_by == null ? (
                 <Flex
-                    direction='row'
-                    align='start'
+                    direction="row"
+                    align="start"
                     p={4}
                     borderLeft={isReply && '1px solid grey'}
                     ml={isReply ? 10 : null}
-                    minH='96px'
+                    minH="96px"
                 >
-                    <Flex direction='column'>
+                    <Flex direction="column">
                         <AvatarButton user={commenter} />
                         {data.email === User && (
                             <Button
-                                size='sm'
+                                size="sm"
                                 onClick={() => {
                                     setEditing(true);
                                 }}
@@ -166,8 +161,8 @@ const Comment = ({ data, isReply, syncCurrentPosts, readOnly }) => {
                         )}
                         {!isReply && (
                             <Button
-                                size='sm'
-                                className='material-icons'
+                                size="sm"
+                                className="material-icons"
                                 onClick={() => setIsReplying(!isReplying)}
                                 mt={2}
                             >
@@ -175,10 +170,10 @@ const Comment = ({ data, isReply, syncCurrentPosts, readOnly }) => {
                             </Button>
                         )}
                     </Flex>
-                    <Flex direction='column' justify='center' w='full'>
-                        <Flex direction='row' mr={8}>
-                            <Flex direction='column'>
-                                <Text fontSize='l' fontWeight='bold' className='name' ml={4}>
+                    <Flex direction="column" justify="center" w="full">
+                        <Flex direction="row" mr={8}>
+                            <Flex direction="column">
+                                <Text fontSize="l" fontWeight="bold" className="name" ml={4}>
                                     {commenter.fullname}
                                 </Text>
                                 {isEditing ? (
@@ -197,11 +192,11 @@ const Comment = ({ data, isReply, syncCurrentPosts, readOnly }) => {
                         </Flex>
 
                         {isReplying && (
-                            <Flex justify='end' w='full' ml='auto'>
+                            <Flex justify="end" w="full" ml="auto">
                                 <CommentForm
                                     parent_id={data.post_id}
                                     setIsReplying={setIsReplying}
-                                    type='reply'
+                                    type="reply"
                                     syncCurrentPosts={syncCurrentPosts}
                                 />
                             </Flex>
@@ -210,13 +205,13 @@ const Comment = ({ data, isReply, syncCurrentPosts, readOnly }) => {
                 </Flex>
             ) : (
                 <Flex
-                    align='center'
+                    align="center"
                     p={4}
                     borderLeft={isReply && '1px solid grey'}
                     ml={isReply ? 10 : null}
-                    minH='96px'
+                    minH="96px"
                 >
-                    <Text as='i'>This comment was deleted{data.deleted_by === 'Admin' && ' by an admin'}.</Text>
+                    <Text as="i">This comment was deleted{data.deleted_by === 'Admin' && ' by an admin'}.</Text>
                 </Flex>
             )}
             {data?.comments?.map((reply, i) => {

@@ -34,7 +34,7 @@ const initialise = () => {
     // Create a default post
     createPost({
         email: 'allitoth2706@outlook.com',
-        main: 'Hello world!',
+        text: 'Hello world!',
         comments: [],
         like: [],
         image: '',

@@ -13,7 +13,7 @@ import { getUserInfo } from '../Data/accounts';
 const Post = ({ post, syncCurrentPosts, readOnly }) => {
     const User = useContext(UserContext);
 
-    post.main = textFilter.clean(post.main);
+    post.text = textFilter.clean(post.text);
 
     const commenter = getUserInfo(post.email);
     commenter.fullname = `${commenter.first_name} ${commenter.last_name}`;
@@ -56,12 +56,12 @@ const Post = ({ post, syncCurrentPosts, readOnly }) => {
                         <EditPostDialog data={post} setEditing={setEditing} syncCurrentPosts={syncCurrentPosts} />
                     ) : (
                         <Box
-                            className="main"
+                            className="text"
                             mt={8}
                             mb={4}
                             textAlign="left"
                             w="full"
-                            dangerouslySetInnerHTML={{ __html: post.main }}
+                            dangerouslySetInnerHTML={{ __html: post.text }}
                         />
                     )}
                     {post.image_url && (

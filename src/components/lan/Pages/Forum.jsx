@@ -19,6 +19,7 @@ const Forum = () => {
     const syncCurrentPosts = async () => {
         // getAllPosts().then((e) => {
         const currentPosts = getAllPosts();
+        console.log(currentPosts);
         if (Array.isArray(currentPosts)) setPosts(currentPosts);
         // });
     };
@@ -34,7 +35,7 @@ const Forum = () => {
                         {posts?.map((post, i) => {
                             return (
                                 <React.Fragment key={i}>
-                                    <Post post={post} syncCurrentPosts={syncCurrentPosts} />
+                                    <Post post={post} id={i} syncCurrentPosts={syncCurrentPosts} />
                                 </React.Fragment>
                             );
                         })}

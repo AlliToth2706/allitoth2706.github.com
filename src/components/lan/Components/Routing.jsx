@@ -48,7 +48,7 @@ const RoutingInternals = () => {
                         <Route path="/" element={<FrontPage login={onOpenLogin} signup={onOpenSignup} />} />
 
                         {/* If the page isn't a route then redirect back to the main page */}
-                        <Route path="*" element={<Redirect to="/lan/demo" />} />
+                        <Route path="*" element={<Redirect to="/social/demo" />} />
                     </Routes>
                 </Flex>
                 <Footer login={onOpenLogin} signup={onOpenSignup} />

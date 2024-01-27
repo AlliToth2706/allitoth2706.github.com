@@ -3,13 +3,13 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Form from './Form';
 import Info from './Info';
 
-export default function Dog() {
+export function Dog() {
     return (
         <ChakraProvider>
-                <Routes>
-                    <Route path="/" element={<Form />}></Route>
-                    <Route path="info" element={<Info />}></Route>
-                </Routes>
+            <Routes>
+                <Route path="/" element={<Form />}></Route>
+                <Route path="info" element={<Info />}></Route>
+            </Routes>
         </ChakraProvider>
     );
 }

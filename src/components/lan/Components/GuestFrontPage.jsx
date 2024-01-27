@@ -1,4 +1,5 @@
 import { Button, Flex, Heading, Image, Spacer, Text, useColorMode } from '@chakra-ui/react';
+import NewPostForm from './NewPostForm';
 
 //The front page for users that are not logged in
 const GuestFrontPage = ({ login, signup }) => {
@@ -32,7 +33,8 @@ const GuestFrontPage = ({ login, signup }) => {
                     </Text>
                 </Flex>
 
-                <Image src={`/lan/${colorMode === 'light' ? 'light' : 'dark'}.png`} w="45%" />
+                <Image src={`/social/${colorMode === 'light' ? 'light' : 'dark'}.png`} w="45%" />
+                <NewPostForm syncCurrentPosts={() => {}} />
             </Flex>
         </>
     );

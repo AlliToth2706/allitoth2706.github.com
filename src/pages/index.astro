@@ -1,6 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
-// import Card from '../components/Card.astro';
+import Card from '../components/Card.astro';
 import Typewriter from '../components/Typewriter.svelte';
 ---
 
@@ -12,144 +12,78 @@ import Typewriter from '../components/Typewriter.svelte';
             <ul>
                 <Typewriter client:only text="Hi, I'm Alli." />
                 <p></p>
-                 todo: maybe add some sort of graphic of me, MAYYYYBE a photo
+                todo: maybe add some sort of graphic of me, MAYYYYBE a photo
             </ul>
         </section>
 
         <section>
             <ul>
                 <h1>About me</h1>
-                 info + education
+                info + education
             </ul>
         </section>
 
         <section>
             <ul>
                 <h1>Skills</h1>
-                 todo: add something here
+                todo: add something here Lorem ipsum dolor sit amet, consectetur adipisicing elit. Optio vero beatae tempore
+                aperiam cum enim deleniti, fugit illo consectetur sit nemo laborum quos ea culpa dolores, reiciendis deserunt
+                distinctio facilis! Veritatis ipsa optio tempora, excepturi voluptates voluptas ex expedita natus maiores
+                repudiandae deleniti, nihil molestias ullam beatae quae itaque dolores cum sequi. Alias odio earum accusantium
+                ab vel minima, repellendus amet ex, nulla itaque rem eveniet quisquam nihil sunt aliquid repudiandae nisi
+                eos perferendis consequatur omnis quis quam praesentium? Accusantium, pariatur? Minima, nobis provident repellat
+                adipisci commodi error nihil? Fuga magnam recusandae reprehenderit adipisci perferendis eum dolorum voluptatum
+                quos. Temporibus.
             </ul>
         </section>
 
         <section>
-            <ul>
+            <div>
                 <h1>Projects</h1>
-                <a href="dog/">dog</a>
-                <a href="lan/">lan</a>
-                 todo: 2x2 column
-            </ul>
+                <ul role="list" class="link-card-grid">
+                    <Card
+                        href="dog/"
+                        title="Dog Breed Demo"
+                        body="React Demonstration of collecting data of dog breeds."
+                    />
+                    <Card
+                        href="social/"
+                        title="Social Media Demo"
+                        body="React Demonstraction of a social media website."
+                    />
+                    <Card href="dog/" title="dummy" body="React Demonstration of collecting data of dog breeds." />
+                    <Card href="social/" title="dummy" body="React Demonstraction of a social media website." />
+                </ul>
+            </div>
         </section>
 
         <section>
             <h1>Contact</h1>
         </section>
 
-        <!-- <ul role="list" class="link-card-grid">
-			<Card
-				href="https://docs.astro.build/"
-				title="Documentation"
-				body="Learn how Astro works and explore the official API docs."
-			/>
-			<Card
-				href="https://astro.build/integrations/"
-				title="Integrations"
-				body="Supercharge your project with new frameworks and libraries."
-			/>
-			<Card
-				href="https://astro.build/themes/"
-				title="Themes"
-				body="Explore a galaxy of community-built starter themes."
-			/>
-			<Card
-				href="https://astro.build/chat/"
-				title="Community"
-				body="Come say hi to our amazing Discord community. ❤️"
-			/>
-		</ul> -->
+        <!-- <section>
+            <ul role="list" class="link-card-grid">
+                <Card
+                    href="https://docs.astro.build/"
+                    title="Documentation"
+                    body="Learn how Astro works and explore the official API docs."
+                />
+                <Card
+                    href="https://astro.build/integrations/"
+                    title="Integrations"
+                    body="Supercharge your project with new frameworks and libraries."
+                />
+                <Card
+                    href="https://astro.build/themes/"
+                    title="Themes"
+                    body="Explore a galaxy of community-built starter themes."
+                />
+                <Card
+                    href="https://astro.build/chat/"
+                    title="Community"
+                    body="Come say hi to our amazing Discord community. ❤️"
+                />
+            </ul>
+        </section> -->
     </main>
 </Layout>
-
-<style>
-    html,
-    body,
-    main section {
-        block-size: 100%;
-    }
-
-    main {
-        margin: auto;
-        color: white;
-        font-size: 20px;
-        line-height: 1.6;
-        display: initial;
-    }
-
-    body {
-        width: 800px;
-        max-width: calc(100% - 2rem);
-        margin: auto;
-    }
-
-    .astro-a {
-        position: absolute;
-        top: -32px;
-        left: 50%;
-        transform: translatex(-50%);
-        width: 220px;
-        height: auto;
-        z-index: -1;
-    }
-    h1 {
-        font-size: 4rem;
-        font-weight: 700;
-        line-height: 1;
-        text-align: center;
-        margin-bottom: 1em;
-    }
-    .instructions {
-        margin-bottom: 2rem;
-        border: 1px solid rgba(var(--accent-light), 25%);
-        background: linear-gradient(rgba(var(--accent-dark), 66%), rgba(var(--accent-dark), 33%));
-        padding: 1.5rem;
-        border-radius: 8px;
-    }
-    .instructions code {
-        font-size: 0.8em;
-        font-weight: bold;
-        background: rgba(var(--accent-light), 12%);
-        color: rgb(var(--accent-light));
-        border-radius: 4px;
-        padding: 0.3em 0.4em;
-    }
-    .instructions strong {
-        color: rgb(var(--accent-light));
-    }
-    .link-card-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(24ch, 1fr));
-        gap: 2rem;
-        padding: 0;
-    }
-
-    html {
-        scroll-snap-type: y mandatory;
-    }
-
-    section {
-        scroll-snap-align: start;
-        scroll-snap-stop: always;
-
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-    /* section:nth-of-type(even) {
-	color: white;
-	background: black;
-	} */
-
-    /* section:nth-of-type(odd) {
-	color: black;
-	background: white;
-	} */
-</style>

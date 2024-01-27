@@ -7,10 +7,11 @@ import ReactionBar from './ReactionBar';
 import AvatarButton from './AvatarButton';
 import Quill from './Quill';
 
+// TODO: Probably change comments/posts to be based on A1
+
 /**
  * The form for users to add comments to posts.
  */
-// TODO: find out what is making it look weird here
 const CommentForm = ({ parent_id, setIsReplying, syncCurrentPosts }) => {
     const User = useContext(UserContext);
     const [isInvalid, setIsInvalid] = useState(false);
@@ -25,6 +26,8 @@ const CommentForm = ({ parent_id, setIsReplying, syncCurrentPosts }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+
+        console.log(newComment, isInvalid, parent_id);
 
         if (isInvalid) {
             return;

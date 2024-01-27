@@ -10,7 +10,7 @@ import { getUserInfo } from '../Data/accounts';
 /**
  * Generates the posts on the forum, and handles the state for if it's being edited.
  */
-const Post = ({ post, syncCurrentPosts, readOnly }) => {
+const Post = ({ post, id, syncCurrentPosts, readOnly }) => {
     const User = useContext(UserContext);
 
     post.text = textFilter.clean(post.text);
@@ -77,9 +77,9 @@ const Post = ({ post, syncCurrentPosts, readOnly }) => {
 
                     {/* reactions and comment form */}
                     <Flex direction="row" align="center" justify="center" w="full">
-                        <ReactionBar userEmail={User} postId={post.post_id} />
+                        <ReactionBar userEmail={User} postId={id} />
                         <Spacer />
-                        <CommentForm parent_id={post.post_id} syncCurrentPosts={syncCurrentPosts} />
+                        <CommentForm parent_id={id} syncCurrentPosts={syncCurrentPosts} />
                     </Flex>
                 </>
             ) : (

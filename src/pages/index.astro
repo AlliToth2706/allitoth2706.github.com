@@ -2,44 +2,64 @@
 import Layout from '../layouts/Layout.astro';
 import Card from '../components/Card.astro';
 import Typewriter from '../components/Typewriter.svelte';
+import Navbar from '../components/Navbar.astro';
+import Bubble from '../components/Bubble.astro';
+import ContactForm from '../components/ContactForm.jsx';
 ---
 
 <Layout title="Welcome to Astro.">
     <!-- TODO: maybe add loading to this page -->
+    <Navbar />
     <main>
         <!-- https://codepen.io/argyleink/pen/yLovWjz css -->
-        <section>
+        <section id="home">
             <ul>
-                <Typewriter client:only text="Hi, I'm Alli." />
-                <p></p>
-                todo: maybe add some sort of graphic of me, MAYYYYBE a photo
+                <div class="center">
+                    <Typewriter client:only text="Hi, I'm Alli." />
+                </div>
+                <h2 class="center" style="font-weight:normal;">
+                    I specialise in&nbsp<b class="accent-gradient">Frontend Web Development</b>.
+                </h2>
             </ul>
         </section>
 
-        <section>
-            <ul>
-                <h1>About me</h1>
-                info + education
-            </ul>
+        <section id="about">
+            <div style="display:grid; grid-template-columns:1fr 1fr;justify-content:space-between;">
+                <ul>
+                    <h2 class="inverse-gradient">About me</h2>
+                    <p>
+                        <i>Tech based:</i><br />I have a degree from RMIT University in Computer Science, where I both
+                        dabbled and worked on multiple web and mobile based projects, both for professors as the
+                        clients, and for actual clients. This lead me to finding how passionate I am for front-end
+                        development.<br /><br /><i>Personal life:</i><br />I grew up on the Mornington Peninsula coast,
+                        having an enjoyment for gaming, anime, and linguistics. I excelled in mathematics and science
+                        during school, and eventually found my way to programming and computer science.
+                    </p>
+                </ul>
+
+                <ul style="margin-left:var(--chakra-sizes-8)">
+                    <h2 class="inverse-gradient">Skills</h2>
+                    <h4>Frontend Languages/Frameworks</h4>
+                    {
+                        ['HTML', 'CSS (+ SASS)', 'Javascript', 'React', 'Svelte', 'Ionic', 'Flutter'].map((elem) => (
+                            <Bubble name={elem} />
+                        ))
+                    }
+                    <h4>Other Programming Languages</h4>
+                    {['Java', 'Python', 'C++', 'C#'].map((elem) => <Bubble name={elem} />)}
+                    <h4>Non-Languages Skills</h4>
+                    {['Git', 'VSCode', 'SEO'].map((elem) => <Bubble name={elem} />)}
+                </ul>
+            </div>
         </section>
 
-        <section>
-            <ul>
-                <h1>Skills</h1>
-                todo: add something here Lorem ipsum dolor sit amet, consectetur adipisicing elit. Optio vero beatae tempore
-                aperiam cum enim deleniti, fugit illo consectetur sit nemo laborum quos ea culpa dolores, reiciendis deserunt
-                distinctio facilis! Veritatis ipsa optio tempora, excepturi voluptates voluptas ex expedita natus maiores
-                repudiandae deleniti, nihil molestias ullam beatae quae itaque dolores cum sequi. Alias odio earum accusantium
-                ab vel minima, repellendus amet ex, nulla itaque rem eveniet quisquam nihil sunt aliquid repudiandae nisi
-                eos perferendis consequatur omnis quis quam praesentium? Accusantium, pariatur? Minima, nobis provident repellat
-                adipisci commodi error nihil? Fuga magnam recusandae reprehenderit adipisci perferendis eum dolorum voluptatum
-                quos. Temporibus.
-            </ul>
-        </section>
+        <!-- <section id="skills">
+                
+            </section> -->
 
-        <section>
+        <section id="projects">
             <div>
-                <h1>Projects</h1>
+                <h1 class="inverse-gradient">Projects</h1>
                 <ul role="list" class="link-card-grid">
                     <Card
                         href="dog/"
@@ -51,39 +71,20 @@ import Typewriter from '../components/Typewriter.svelte';
                         title="Social Media Demo"
                         body="React Demonstraction of a social media website."
                     />
-                    <Card href="dog/" title="dummy" body="React Demonstration of collecting data of dog breeds." />
-                    <Card href="social/" title="dummy" body="React Demonstraction of a social media website." />
+                    <Card href="website/" title="this website" body="this website." />
+                    <Card href="precision/" title="Precision Electronics" body="A React website I helped create." />
+                    <!-- <Card href="??/" title="" body="a" /> -->
+                    <!-- <Card href="??/" title="" body="a" /> -->
                 </ul>
             </div>
         </section>
 
-        <section>
-            <h1>Contact</h1>
-        </section>
-
-        <!-- <section>
-            <ul role="list" class="link-card-grid">
-                <Card
-                    href="https://docs.astro.build/"
-                    title="Documentation"
-                    body="Learn how Astro works and explore the official API docs."
-                />
-                <Card
-                    href="https://astro.build/integrations/"
-                    title="Integrations"
-                    body="Supercharge your project with new frameworks and libraries."
-                />
-                <Card
-                    href="https://astro.build/themes/"
-                    title="Themes"
-                    body="Explore a galaxy of community-built starter themes."
-                />
-                <Card
-                    href="https://astro.build/chat/"
-                    title="Community"
-                    body="Come say hi to our amazing Discord community. ❤️"
-                />
+        <section id="contact">
+            <ul>
+                <h1 class="inverse-gradient">Contact</h1>
+                <p>Feel free to contact me down below!</p>
+                <ContactForm />
             </ul>
-        </section> -->
+        </section>
     </main>
 </Layout>

@@ -1,0 +1,40 @@
+---
+interface Props {
+    name: string;
+}
+
+const { name } = Astro.props;
+---
+
+<div class="skill">
+    {name}
+</div>
+
+<style>
+    .skill {
+        display: inline-flex;
+        appearance: none;
+        align-items: center;
+        justify-content: center;
+        user-select: none;
+        position: relative;
+        white-space: nowrap;
+        vertical-align: middle;
+        outline: 2px solid transparent;
+        outline-offset: 2px;
+        line-height: 1.2;
+        border-radius: var(--chakra-radii-md);
+        font-weight: var(--chakra-fontWeights-semibold);
+        transition-property: var(--chakra-transition-property-common);
+        transition-duration: var(--chakra-transition-duration-normal);
+        height: var(--chakra-sizes-10);
+        min-width: var(--chakra-sizes-10);
+        font-size: var(--chakra-fontSizes-md);
+        padding-inline-start: var(--chakra-space-4);
+        padding-inline-end: var(--chakra-space-4);
+        background: var(--chakra-colors-gray-100);
+        color: var(--chakra-colors-gray-800);
+        margin-bottom: 20px;
+        margin-right: 5px;
+    }
+</style>

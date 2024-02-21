@@ -26,6 +26,7 @@ const ContactForm = () => {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [ableToSend, setAbleToSend] = useState(true);
 
+    const borderStyle = { borderColor: 'rgb(var(--accent))', boxShadow: '0 0 0 1px rgb(var(--accent))' };
     const toast = useToast();
 
     /**
@@ -70,32 +71,22 @@ const ContactForm = () => {
         e.preventDefault();
         sendEmail(e);
     });
+
     return (
         <form>
             <FormControl isRequired>
                 <FormLabel>Name</FormLabel>
-                <Input
-                    type="text"
-                    name="user_name"
-                    _focusVisible={{ borderColor: 'rgb(var(--accent))', boxShadow: '0 0 0 1px rgb(var(--accent))' }}
-                />
+                <Input type="text" name="user_name" _focusVisible={borderStyle} />
             </FormControl>
             <br />
             <FormControl isRequired>
                 <FormLabel>Email</FormLabel>
-                <Input
-                    type="email"
-                    name="user_email"
-                    _focusVisible={{ borderColor: 'rgb(var(--accent))', boxShadow: '0 0 0 1px rgb(var(--accent))' }}
-                />
+                <Input type="email" name="user_email" _focusVisible={borderStyle} />
             </FormControl>
             <br />
             <FormControl isRequired>
                 <FormLabel>Message</FormLabel>
-                <Textarea
-                    name="message"
-                    _focusVisible={{ borderColor: 'rgb(var(--accent))', boxShadow: '0 0 0 1px rgb(var(--accent))' }}
-                />
+                <Textarea name="message" _focusVisible={borderStyle} />
             </FormControl>
             <br />
             <Button

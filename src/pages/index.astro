@@ -5,90 +5,93 @@ import Typewriter from '../components/Typewriter.svelte';
 import Navbar from '../components/Navbar.astro';
 import Bubble from '../components/Bubble.astro';
 import ContactForm from '../components/ContactForm.jsx';
+import Loading from '../components/Loading.svelte';
 ---
 
-<Layout title="Welcome to Astro.">
-    <!-- TODO: maybe add loading to this page -->
-    <Navbar />
-    <main>
-        <!-- https://codepen.io/argyleink/pen/yLovWjz css -->
-        <section id="home">
-            <ul>
-                <div class="center">
-                    <Typewriter client:only text="Hi, I'm Alli." />
-                </div>
-                <h2 class="center" style="font-weight:normal;">
-                    I specialise in&nbsp<b class="accent-gradient">Frontend Web Development</b>.
-                </h2>
-            </ul>
-        </section>
-
-        <section id="about">
-            <div style="display:grid; grid-template-columns:1fr 1fr;justify-content:space-between;">
-                <ul>
-                    <h2 class="inverse-gradient">About me</h2>
-                    <p>
-                        <i>Tech based:</i><br />I have a degree from RMIT University in Computer Science, where I both
-                        dabbled and worked on multiple web and mobile based projects, both for professors as the
-                        clients, and for actual clients. This lead me to finding how passionate I am for front-end
-                        development.<br /><br /><i>Personal life:</i><br />I grew up on the Mornington Peninsula coast,
-                        having an enjoyment for gaming, anime, and linguistics. I excelled in mathematics and science
-                        during school, and eventually found my way to programming and computer science.
-                    </p>
-                </ul>
-
-                <ul style="margin-left:var(--chakra-sizes-8)">
-                    <h2 class="inverse-gradient">Skills</h2>
-                    <h4>Frontend Languages/Frameworks</h4>
-                    {
-                        ['HTML', 'CSS (+ SASS)', 'Javascript', 'React', 'Svelte', 'Ionic', 'Flutter'].map((elem) => (
-                            <Bubble name={elem} />
-                        ))
-                    }
-                    <h4>Other Programming Languages</h4>
-                    {['Java', 'Python', 'C++', 'C#'].map((elem) => <Bubble name={elem} />)}
-                    <h4>Non-Languages Skills</h4>
-                    {['Git', 'VSCode', 'SEO'].map((elem) => <Bubble name={elem} />)}
-                </ul>
-            </div>
-        </section>
-
-        <!-- <section id="skills">
-                
-            </section> -->
-
-        <section id="projects">
-            <div>
-                <h1 class="inverse-gradient">Projects</h1>
-                <ul role="list" class="link-card-grid">
-                    <Card
-                        href="dog/"
-                        title="Dog Breed Demo"
-                        body="React Demonstration of collecting data of dog breeds."
-                    />
-                    <Card
-                        href="social/"
-                        title="Social Media Demo"
-                        body="React Demonstraction of a social media website."
-                    />
-                    <Card href="website/" title="this website" body="this website." />
-                    <Card href="precision/" title="Precision Electronics" body="A React website I helped create." />
-                    <!-- <Card href="??/" title="" body="a" /> -->
-                    <!-- <Card href="??/" title="" body="a" /> -->
-                </ul>
-            </div>
-        </section>
-
-        <section id="contact">
-            <ul>
-                <h1 class="inverse-gradient">Contact</h1>
-                <p>Feel free to contact me down below!</p>
-                <ContactForm client:only="react" />
-            </ul>
-        </section>
-    </main>
-</Layout>
-
 <script>
-    document.querySelector('form').addEventListener('submit', (e) => e.preventDefault());
+    const content = document.getElementById('content');
+    setTimeout(() => {
+        content.className = '';
+    }, 1000);
 </script>
+
+<Layout title="Welcome to Astro.">
+    <Loading client:only="svelte" />
+    <div id="content" class="invisible">
+        <Navbar />
+        <main>
+            <!-- https://codepen.io/argyleink/pen/yLovWjz css -->
+            <section id="home">
+                <ul>
+                    <div class="center">
+                        <Typewriter client:only="svelte" text="Hi, I'm Alli." />
+                    </div>
+                    <h2 class="center" style="font-weight:normal;">
+                        I specialise in&nbsp<b class="accent-gradient">Frontend Web Development</b>.
+                    </h2>
+                </ul>
+            </section>
+
+            <section id="about">
+                <div style="display:grid; grid-template-columns:1fr 1fr;justify-content:space-between;">
+                    <ul>
+                        <h2 class="inverse-gradient">About me</h2>
+                        <p>
+                            <i>Tech based:</i><br />I have a degree from RMIT University in Computer Science, where I
+                            both dabbled and worked on multiple web and mobile based projects, both for professors as
+                            the clients, and for actual clients. This lead me to finding how passionate I am for
+                            front-end development.<br /><br /><i>Personal life:</i><br />I grew up on the Mornington
+                            Peninsula coast, having an enjoyment for gaming, anime, and linguistics. I excelled in
+                            mathematics and science during school, and eventually found my way to programming and
+                            computer science.
+                        </p>
+                    </ul>
+
+                    <ul style="margin-left:var(--chakra-sizes-8)">
+                        <h2 class="inverse-gradient">Skills</h2>
+                        <h4>Frontend Languages/Frameworks</h4>
+                        {
+                            ['HTML', 'CSS (+ SASS)', 'Javascript', 'React', 'Svelte', 'Ionic', 'Flutter'].map(
+                                (elem) => <Bubble name={elem} />
+                            )
+                        }
+                        <h4>Other Programming Languages</h4>
+                        {['Java', 'Python', 'C++', 'C#'].map((elem) => <Bubble name={elem} />)}
+                        <h4>Non-Languages Skills</h4>
+                        {['Git', 'VSCode', 'SEO'].map((elem) => <Bubble name={elem} />)}
+                    </ul>
+                </div>
+            </section>
+
+            <section id="projects">
+                <div>
+                    <h1 class="inverse-gradient">Projects</h1>
+                    <ul role="list" class="link-card-grid">
+                        <Card
+                            href="dog/"
+                            title="Dog Breed Demo"
+                            body="React Demonstration of collecting data of dog breeds."
+                        />
+                        <Card
+                            href="social/"
+                            title="Social Media Demo"
+                            body="React Demonstraction of a social media website."
+                        />
+                        <Card href="website/" title="this website" body="this website." />
+                        <Card href="precision/" title="Precision Electronics" body="A React website I helped create." />
+                        <!-- <Card href="??/" title="" body="a" /> -->
+                        <!-- <Card href="??/" title="" body="a" /> -->
+                    </ul>
+                </div>
+            </section>
+
+            <section id="contact">
+                <ul style="width:100%;padding:0 8rem;">
+                    <h1 class="inverse-gradient">Contact</h1>
+                    <p style="text-align:center;">Feel free to contact me down below!</p>
+                    <ContactForm client:only="react" />
+                </ul>
+            </section>
+        </main>
+    </div>
+</Layout>

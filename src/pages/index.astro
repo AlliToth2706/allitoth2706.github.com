@@ -83,8 +83,12 @@ import ContactForm from '../components/ContactForm.jsx';
             <ul>
                 <h1 class="inverse-gradient">Contact</h1>
                 <p>Feel free to contact me down below!</p>
-                <ContactForm />
+                <ContactForm client:only="react" />
             </ul>
         </section>
     </main>
 </Layout>
+
+<script>
+    document.querySelector('form').addEventListener('submit', (e) => e.preventDefault());
+</script>

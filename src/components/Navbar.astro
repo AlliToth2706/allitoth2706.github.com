@@ -1,0 +1,57 @@
+<nav>
+    <ul>
+        <li><a href="#home"><img class="logo" src="/logo-1.png" /></a></li>
+        <li>
+            <a href="#about">About</a>
+        </li><li>
+            <a href="#skills">Skills</a>
+        </li><li>
+            <a href="#projects">Projects</a>
+        </li><li>
+            <a href="#contact">Contact</a>
+        </li>
+    </ul>
+</nav>
+
+<style>
+    nav {
+        position: fixed;
+        top: 0;
+        width: var(--content-size);
+        background: var(--background);
+        z-index: 3;
+    }
+
+    .logo {
+        /* transform: scale(0.5); */
+        width: 60px;
+        height: 60px;
+        vertical-align: middle;
+        display: inline-block;
+    }
+
+    ul {
+        padding: unset;
+        display: flex;
+        align-items: center;
+    }
+
+    li:first-child {
+        margin-right: auto;
+    }
+
+    li {
+        list-style-type: none;
+        display: inline-block;
+        padding: 0 10px;
+    }
+
+    li a {
+        color: inherit;
+        text-decoration: none;
+    }
+
+    li a:hover {
+        text-decoration: underline;
+    }
+</style>

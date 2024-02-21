@@ -13,15 +13,15 @@
     :root {
         --typewriterSpeed: 6s;
         --typewriterCharacters: 13;
-        --bg: #13151a;
     }
 
     h1 {
-        font-size: clamp(1rem, 3vw + 1rem, 4rem);
+        font-size: clamp(1rem, 6vw + 1rem, 6rem);
         position: relative;
         font-family: 'Source Code Pro', monospace;
         position: relative;
         width: max-content;
+        padding: 2px;
     }
 
     h1::before,
@@ -35,13 +35,13 @@
     }
 
     h1::before {
-        background: var(--bg);
+        background: var(--background);
         animation: typewriter var(--typewriterSpeed) steps(var(--typewriterCharacters)) 1s forwards;
     }
 
     h1::after {
         width: 0.125em;
-        background: black;
+        background: var(--text-primary);
         animation:
             typewriter var(--typewriterSpeed) steps(var(--typewriterCharacters)) 1s forwards,
             blink 750ms steps(var(--typewriterCharacters)) infinite;

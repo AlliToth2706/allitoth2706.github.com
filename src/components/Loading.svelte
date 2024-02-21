@@ -7,6 +7,7 @@
         setTimeout(() => {
             isLoading = false;
         }, 2000);
+        localStorage.clear(); // Chakra...
     });
 </script>
 

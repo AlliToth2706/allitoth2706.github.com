@@ -11,10 +11,6 @@
     });
 </script>
 
-<div
-    style="margin-top: 30vh; justify-content:center; display:none; width: 100%;"
-    class:visible={isLoading}
-    id="loading-area"
->
-    <img src="/loading.svg" alt="Loading icon" />
+<div class:visible={isLoading} class="justify-center hidden w-full h-1/2 my-auto items-end" id="loading-area">
+    <img src="/loading.svg" alt="Loading icon" class="w-48" />
 </div>

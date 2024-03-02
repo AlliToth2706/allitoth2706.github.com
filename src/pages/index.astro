@@ -6,27 +6,29 @@ import Navbar from '../components/Navbar.astro';
 import Bubble from '../components/Bubble.astro';
 import ContactForm from '../components/ContactForm.jsx';
 import Loading from '../components/Loading.svelte';
+import SparkleCluster from '../components/SparkleCluster.svelte';
 ---
 
 <script>
     const content = document.getElementById('content');
     setTimeout(() => {
-        content.className = '';
+        content.removeAttribute('data-invisible');
     }, 1000);
 </script>
 
-<Layout title="Welcome to Astro.">
+<Layout>
     <Loading client:only="svelte" />
-    <div id="content" class="invisible">
+    <div id="content" data-invisible="true" class="2xl:w-1/2 xl:w-2/3 m-auto">
+        <SparkleCluster client:only="svelte" />
         <Navbar />
-        <main>
+        <main class="m-auto text-xl initial snap-both snap-mandatory leading-8">
             <!-- https://codepen.io/argyleink/pen/yLovWjz css -->
             <section id="home">
                 <ul>
-                    <div class="center">
+                    <div class="flex items-center justify-center">
                         <Typewriter client:only="svelte" text="Hi, I'm Alli." />
                     </div>
-                    <h2 class="center" style="font-weight:normal;">
+                    <h2 class="flex items-center justify-center" style="font-weight:normal;">
                         I specialise in&nbsp<b class="accent-gradient">Frontend Web Development</b>.
                     </h2>
                 </ul>

@@ -1,13 +1,13 @@
 ---
 interface Props {
-    title: string;
+    title?: string;
 }
 
-const { title } = Astro.props;
+const { title = "Alli's Portfolio" } = Astro.props;
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="en" class="bg-zinc-900 text-white m-0 scroll-smooth snap-both snap-mandatory overflow-y-scroll h-full">
     <head>
         <meta charset="UTF-8" />
         <meta name="description" content="Astro description" />
@@ -16,26 +16,22 @@ const { title } = Astro.props;
         <meta name="generator" content={Astro.generator} />
         <title>{title}</title>
     </head>
-    <body>
+    <body class="bg-zinc-900 text-white m-0 h-full">
         <slot />
     </body>
 </html>
 <style is:global>
     :root {
-        --accent: 136, 58, 234; /* #700B97 */
-        --accent-light: 224, 204, 250; /* #8E05C2 */
-        --accent-dark: 49, 10, 101; /* #3E065F */
+        --accent: 112, 11, 151; /* #700B97 */
+        --accent-light: 142, 5, 194; /* #8E05C2 */
+        --accent-dark: 62, 6, 95; /* #3E065F */
         --background: #13151a;
         --text-primary: white;
         --text-primary-rgb: 255, 255, 255; /* --accent: #8e05c2; */
         --accent-gradient: linear-gradient(45deg, rgb(var(--accent)), rgb(var(--accent-light)) 30%, white 60%);
-        --content-size: 800px;
     }
     html {
         font-family: system-ui, sans-serif;
-        background: var(--background);
-        background-size: 224px;
-        color: var(--text-primary);
     }
     code {
         font-family:
@@ -49,79 +45,29 @@ const { title } = Astro.props;
             monospace;
     }
 
-    html,
-    body,
-    #content,
-    main section {
-        block-size: 100%;
+    h2 {
+        font-size: 1.5em;
+        font-weight: 700;
     }
-
-    html body {
-        margin: 0;
-        color: var(--text-primary);
-    }
-
-    main {
-        margin: auto;
-        font-size: 20px;
+    main.text-xl {
         line-height: 1.6;
-        display: initial;
     }
 
-    body {
-        background: var(--background) !important;
+    section {
+        height: 100vh;
     }
 
-    #content {
-        width: var(--content-size);
-        max-width: calc(100% - 2rem);
-        margin: auto;
-    }
-
-    /* .astro-a {
-        position: absolute;
-        top: -32px;
-        left: 50%;
-        transform: translatex(-50%);
-        width: 220px;
-        height: auto;
-        z-index: -1;
-    } */
     h1 {
         font-size: 4rem;
         font-weight: 700;
-        /* line-height: 1; */
         text-align: center;
         margin-bottom: 1em;
     }
-    /* .instructions {
-        margin-bottom: 2rem;
-        border: 1px solid rgba(var(--accent-light), 25%);
-        background: linear-gradient(rgba(var(--accent-dark), 66%), rgba(var(--accent-dark), 33%));
-        padding: 1.5rem;
-        border-radius: 8px;
-    }
-    .instructions code {
-        font-size: 0.8em;
-        font-weight: bold;
-        background: rgba(var(--accent-light), 12%);
-        color: rgb(var(--accent-light));
-        border-radius: 4px;
-        padding: 0.3em 0.4em;
-    }
-    .instructions strong {
-        color: rgb(var(--accent-light));
-    } */
     .link-card-grid {
         display: grid;
-        /* grid-template-columns: repeat(auto-fit, minmax(24ch, 1fr)); */
         grid-template-columns: 1fr 1fr;
         gap: 2rem;
         padding: 0;
-    }
-
-    html {
-        scroll-snap-type: y mandatory;
     }
 
     section {
@@ -131,20 +77,6 @@ const { title } = Astro.props;
         display: flex;
         align-items: center;
         justify-content: center;
-    }
-
-    /* section:nth-of-type(even) {
-        color: white;
-        background: black;
-    }
-
-    section:nth-of-type(odd) {
-        color: black;
-        background: white;
-    } */
-
-    li.clear {
-        list-style-type: none;
     }
 
     input,
@@ -165,16 +97,6 @@ const { title } = Astro.props;
         -webkit-text-fill-color: transparent;
     }
 
-    .center {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-    html {
-        scroll-behavior: smooth;
-    }
-
     ul {
         padding: 0;
     }
@@ -187,7 +109,7 @@ const { title } = Astro.props;
         display: none;
     }
 
-    .invisible {
+    [data-invisible='true'] {
         display: none;
     }
 </style>

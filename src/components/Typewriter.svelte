@@ -35,7 +35,7 @@
     }
 
     h1::before {
-        background: var(--background);
+        background: rgb(24 24 27 / var(--tw-bg-opacity));
         animation: typewriter var(--typewriterSpeed) steps(var(--typewriterCharacters)) 1s forwards;
     }
 

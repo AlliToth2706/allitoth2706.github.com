@@ -21,18 +21,10 @@ const { title = "Alli's Portfolio" } = Astro.props;
     </body>
 </html>
 <style is:global>
-    :root {
-        --accent: 112, 11, 151; /* #700B97 */
-        --accent-light: 142, 5, 194; /* #8E05C2 */
-        --accent-dark: 62, 6, 95; /* #3E065F */
-        --background: #13151a;
-        --text-primary: white;
-        --text-primary-rgb: 255, 255, 255; /* --accent: #8e05c2; */
-        --accent-gradient: linear-gradient(45deg, rgb(var(--accent)), rgb(var(--accent-light)) 30%, white 60%);
-    }
     html {
         font-family: system-ui, sans-serif;
     }
+
     code {
         font-family:
             Menlo,
@@ -43,62 +35,6 @@ const { title = "Alli's Portfolio" } = Astro.props;
             Bitstream Vera Sans Mono,
             Courier New,
             monospace;
-    }
-
-    h2 {
-        font-size: 1.5em;
-        font-weight: 700;
-    }
-    main.text-xl {
-        line-height: 1.6;
-    }
-
-    section {
-        height: 100vh;
-    }
-
-    h1 {
-        font-size: 4rem;
-        font-weight: 700;
-        text-align: center;
-        margin-bottom: 1em;
-    }
-    .link-card-grid {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 2rem;
-        padding: 0;
-    }
-
-    section {
-        scroll-snap-align: start;
-        scroll-snap-stop: always;
-
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-    input,
-    textarea {
-        box-sizing: border-box;
-    }
-
-    .accent-gradient {
-        /* font-size: 72px; */
-        background: linear-gradient(to bottom, rgb(var(--accent)) 0%, rgb(var(--text-primary-rgb)) 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-    }
-
-    .inverse-gradient {
-        background: linear-gradient(to top, rgb(var(--accent-light)) 0%, rgb(var(--text-primary-rgb)) 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-    }
-
-    ul {
-        padding: 0;
     }
 
     .visible {

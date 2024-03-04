@@ -26,7 +26,7 @@ const ContactForm = () => {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [ableToSend, setAbleToSend] = useState(true);
 
-    const borderStyle = { borderColor: 'rgb(var(--accent))', boxShadow: '0 0 0 1px rgb(var(--accent))' };
+    const borderStyle = { borderColor: 'rgb(216 180 254)', boxShadow: '0 0 0 1px rgb(216 180 254)' };
     const toast = useToast();
 
     /**
@@ -93,8 +93,8 @@ const ContactForm = () => {
                 type="submit"
                 isLoading={isSubmitting}
                 disabled={ableToSend}
-                style={{ width: '100%', fontFamily: 'system-ui, sans-serif' }}
-                _hover={{ background: 'rgb(var(--accent-light)) !important' }}
+                class="w-full hover:bg-purple-300 rounded-lg bg-gray-100 text-black"
+                style={{ fontFamily: 'system-ui, sans-serif' }}
             >
                 Send
             </Button>

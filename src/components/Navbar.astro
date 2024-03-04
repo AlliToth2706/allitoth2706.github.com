@@ -1,33 +1,20 @@
 <nav class="fixed top-0 w-full 2xl:w-1/2 xl:w-2/3 bg-zinc-900 z-10">
     <ul class="my-4 p-0 flex items-center">
-        <li class="mr-auto">
-            <a href="#home"><img class="w-16 h-16 align-middle inline-block" src="/logo-1.png" /></a>
-        </li>
-        <li>
-            <a href="#about">About</a>
-        </li>
-        <li>
-            <a href="#projects">Projects</a>
-        </li>
-        <li>
-            <a href="#contact">Contact</a>
-        </li>
+        {
+            [
+                { href: 'home', internal: <img class="w-16 h-16 align-middle inline-block" src="/logo-1.png" /> },
+                { href: 'about' },
+                { href: 'projects' },
+                { href: 'contact' },
+            ].map((e) => {
+                return (
+                    <li class="list-none inline-block px-2.5 first:mr-auto">
+                        <a href={`#${e.href}`} class="text-inherit hover:text-purple-300 capitalize">
+                            {e.internal ? e.internal : e.href}
+                        </a>
+                    </li>
+                );
+            })
+        }
     </ul>
 </nav>
-
-<style>
-    li {
-        list-style-type: none;
-        display: inline-block;
-        padding: 0 10px;
-    }
-
-    li a {
-        color: inherit;
-        text-decoration: none;
-    }
-
-    li a:hover {
-        color: rgb(var(--accent-light));
-    }
-</style>

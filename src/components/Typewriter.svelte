@@ -5,8 +5,10 @@
     $: document.querySelector(':root').style.setProperty('--typewriterCharacters', text.length);
 </script>
 
-<span class="typewriter">
-    <h1>{text}</h1>
+<span>
+    <h1 class="leading-normal relative w-max p-1 font-bold h-fit my-20 before:bg-zinc-900 after:w-3 after:bg-white">
+        {text}
+    </h1>
 </span>
 
 <style>
@@ -17,11 +19,7 @@
 
     h1 {
         font-size: clamp(1rem, 6vw + 1rem, 6rem);
-        position: relative;
         font-family: 'Source Code Pro', monospace;
-        position: relative;
-        width: max-content;
-        padding: 2px;
     }
 
     h1::before,
@@ -35,13 +33,10 @@
     }
 
     h1::before {
-        background: rgb(24 24 27 / var(--tw-bg-opacity));
         animation: typewriter var(--typewriterSpeed) steps(var(--typewriterCharacters)) 1s forwards;
     }
 
     h1::after {
-        width: 0.125em;
-        background: var(--text-primary);
         animation:
             typewriter var(--typewriterSpeed) steps(var(--typewriterCharacters)) 1s forwards,
             blink 750ms steps(var(--typewriterCharacters)) infinite;

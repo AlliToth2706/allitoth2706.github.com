@@ -4,40 +4,44 @@ import Card from '../components/Card.astro';
 import Typewriter from '../components/Typewriter.svelte';
 import Navbar from '../components/Navbar.astro';
 import Bubble from '../components/Bubble.astro';
+import PageSection from '../components/PageSection.astro';
 import ContactForm from '../components/ContactForm.jsx';
 import Loading from '../components/Loading.svelte';
 import SparkleCluster from '../components/SparkleCluster.svelte';
+
+const headingGradientClasses = `text-transparent bg-clip-text from-purple-300 to-white`;
 ---
 
-<script>
-    const content = document.getElementById('content');
-    setTimeout(() => {
-        content.removeAttribute('data-invisible');
-    }, 1000);
-</script>
-
+<!-- <script>
+    // const content = document.getElementById('content');
+    // setTimeout(() => {
+    //     content.removeAttribute('data-invisible');
+    // }, 1000);
+</script> -->
 <Layout>
-    <Loading client:only="svelte" />
-    <div id="content" data-invisible="true" class="2xl:w-1/2 xl:w-2/3 m-auto">
+    <!-- <Loading client:only="svelte" /> -->
+    <div id="content" data-invisible="false" class="2xl:w-1/2 xl:w-2/3 m-auto">
         <SparkleCluster client:only="svelte" />
         <Navbar />
         <main class="m-auto text-xl initial snap-both snap-mandatory leading-8">
             <!-- https://codepen.io/argyleink/pen/yLovWjz css -->
-            <section id="home">
+            <PageSection id="home">
                 <ul>
                     <div class="flex items-center justify-center">
                         <Typewriter client:only="svelte" text="Hi, I'm Alli." />
                     </div>
-                    <h2 class="flex items-center justify-center" style="font-weight:normal;">
-                        I specialise in&nbsp<b class="accent-gradient">Frontend Web Development</b>.
+                    <h2 class="flex items-center justify-center font-normal text-3xl">
+                        I specialise in&nbsp<b class={`${headingGradientClasses} bg-gradient-to-b`}
+                            >Frontend Web Development</b
+                        >.
                     </h2>
                 </ul>
-            </section>
+            </PageSection>
 
-            <section id="about">
-                <div style="display:grid; grid-template-columns:1fr 1fr;justify-content:space-between;">
-                    <ul>
-                        <h2 class="inverse-gradient">About me</h2>
+            <PageSection id="about">
+                <div class="grid grid-cols-2 content-evenly">
+                    <ul class="ml-12 mr-2">
+                        <h2 class={`${headingGradientClasses} bg-gradient-to-t text-3xl my-6 font-bold`}>About me</h2>
                         <p>
                             <i>Tech based:</i><br />I have a degree from RMIT University in Computer Science, where I
                             both dabbled and worked on multiple web and mobile based projects, both for professors as
@@ -49,26 +53,30 @@ import SparkleCluster from '../components/SparkleCluster.svelte';
                         </p>
                     </ul>
 
-                    <ul style="margin-left:var(--chakra-sizes-8)">
-                        <h2 class="inverse-gradient">Skills</h2>
-                        <h4>Frontend Languages/Frameworks</h4>
+                    <ul class="ml-8 mr-6">
+                        <h2 class={`${headingGradientClasses} bg-gradient-to-t text-3xl my-6 font-bold`}>Skills</h2>
+                        <h4 class="mt-2 mb-6">Frontend Languages/Frameworks</h4>
                         {
-                            ['HTML', 'CSS (+ SASS)', 'Javascript', 'React', 'Svelte', 'Ionic', 'Flutter'].map(
+                            ['HTML', 'CSS (SASS, Tailwind)', 'Javascript', 'React', 'Svelte', 'Ionic', 'Flutter'].map(
                                 (elem) => <Bubble name={elem} />
                             )
                         }
-                        <h4>Other Programming Languages</h4>
+                        <h4 class="mb-6">Other Programming Languages</h4>
                         {['Java', 'Python', 'C++', 'C#'].map((elem) => <Bubble name={elem} />)}
-                        <h4>Non-Languages Skills</h4>
+                        <h4 class="mb-6">Non-Languages Skills</h4>
                         {['Git', 'VSCode', 'SEO'].map((elem) => <Bubble name={elem} />)}
                     </ul>
                 </div>
-            </section>
+            </PageSection>
 
-            <section id="projects">
+            <PageSection id="projects">
                 <div>
-                    <h1 class="inverse-gradient">Projects</h1>
-                    <ul role="list" class="link-card-grid">
+                    <h1
+                        class={`${headingGradientClasses} bg-gradient-to-t text-6xl font-bold text-center leading-normal mb-20`}
+                    >
+                        Projects
+                    </h1>
+                    <ul role="list" class="grid grid-cols-2 gap-8 p-0">
                         <Card
                             href="dog/"
                             title="Dog Breed Demo"
@@ -85,15 +93,19 @@ import SparkleCluster from '../components/SparkleCluster.svelte';
                         <!-- <Card href="??/" title="" body="a" /> -->
                     </ul>
                 </div>
-            </section>
+            </PageSection>
 
-            <section id="contact">
-                <ul style="width:100%;padding:0 8rem;">
-                    <h1 class="inverse-gradient">Contact</h1>
-                    <p style="text-align:center;">Feel free to contact me down below!</p>
+            <PageSection id="contact">
+                <ul class="w-96 py-0">
+                    <h1
+                        class={`${headingGradientClasses} bg-gradient-to-t font-bold text-6xl text-center leading-normal mb-10`}
+                    >
+                        Contact
+                    </h1>
+                    <p class="text-center mb-4">Feel free to contact me down below!</p>
                     <ContactForm client:only="react" />
                 </ul>
-            </section>
+            </PageSection>
         </main>
     </div>
 </Layout>

@@ -7,7 +7,6 @@
     top: ${coords.y}px;
     width: ${coords.doubleSized ? size * 2 : size}px; 
     height: ${coords.doubleSized ? size * 2 : size}px;
-    position: absolute;
     animation-delay: ${coords.delay}s;
     `;
 </script>
@@ -15,7 +14,7 @@
 <svg
     alt="Sparkle SVG"
     style={sparkleStyle}
-    class="animated fill-purple-500"
+    class="animated fill-purple-500 origin-center absolute"
     id="eq8CIJoQknA1"
     xmlns="http://www.w3.org/2000/svg"
     xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -34,7 +33,6 @@
 
 <style>
     .animated {
-        transform-origin: center;
         transform-box: fill-box;
         animation: scale 2s infinite;
     }

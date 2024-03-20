@@ -25,6 +25,7 @@ const Container = () => (
 const ContactForm = () => {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [ableToSend, setAbleToSend] = useState(true);
+    const [honeypot, setHoneypot] = useState('');
 
     const borderStyle = { borderColor: 'rgb(216 180 254)', boxShadow: '0 0 0 1px rgb(216 180 254)' };
     const toast = useToast();
@@ -35,6 +36,15 @@ const ContactForm = () => {
     const sendEmail = (e) => {
         setIsSubmitting(true);
         if (ableToSend) {
+            // Check if the honeypot was filled in
+            if (honeypot) {
+                console.log('true');
+                // Refuse to allow to send anymore
+                setAbleToSend(false);
+
+                // Do something else(?)
+                return;
+            }
             setAbleToSend(false);
             setTimeout(() => {
                 setAbleToSend(true);
@@ -49,6 +59,8 @@ const ContactForm = () => {
                         isClosable: true,
                     });
                     setIsSubmitting(false);
+                    // Clears the form after sending the email
+                    e.target.reset();
                 },
                 (error) => {
                     toast({
@@ -62,9 +74,6 @@ const ContactForm = () => {
                 }
             );
         }
-
-        // Clears the form after sending the email
-        e.target.reset();
     };
 
     document.querySelector('form')?.addEventListener('submit', (e) => {
@@ -73,32 +82,41 @@ const ContactForm = () => {
     });
 
     return (
-        <form>
-            <FormControl isRequired>
-                <FormLabel>Name</FormLabel>
-                <Input type="text" name="user_name" _focusVisible={borderStyle} />
-            </FormControl>
-            <br />
-            <FormControl isRequired>
-                <FormLabel>Email</FormLabel>
-                <Input type="email" name="user_email" _focusVisible={borderStyle} />
-            </FormControl>
-            <br />
-            <FormControl isRequired>
-                <FormLabel>Message</FormLabel>
-                <Textarea name="message" _focusVisible={borderStyle} />
-            </FormControl>
-            <br />
-            <Button
-                type="submit"
-                isLoading={isSubmitting}
-                disabled={ableToSend}
-                class="w-full hover:bg-purple-300 rounded-lg bg-gray-100 text-black"
-                style={{ fontFamily: 'system-ui, sans-serif' }}
-            >
-                Send
-            </Button>
-        </form>
+        <>
+            <form>
+                <FormControl isRequired>
+                    <FormLabel>Name</FormLabel>
+                    <Input type="text" name="user_name" _focusVisible={borderStyle} />
+                </FormControl>
+                <br />
+                <FormControl isRequired>
+                    <FormLabel>Email</FormLabel>
+                    <Input type="email" name="user_email" _focusVisible={borderStyle} />
+                </FormControl>
+                <FormControl
+                    className="opacity-0 !absolute top-0 left-0 h-0 w-0 -z-10"
+                    onChange={(e) => setHoneypot(e.target.value)}
+                >
+                    <FormLabel></FormLabel>
+                    <Input type="email" name="user_email_repeat" _focusVisible={borderStyle} autoComplete="off" />
+                </FormControl>
+                <br />
+                <FormControl isRequired>
+                    <FormLabel>Message</FormLabel>
+                    <Textarea name="message" _focusVisible={borderStyle} />
+                </FormControl>
+                <br />
+                <Button
+                    type="submit"
+                    isLoading={isSubmitting}
+                    disabled={ableToSend}
+                    className="w-full hover:bg-purple-300 rounded-lg bg-gray-100 text-black"
+                    style={{ fontFamily: 'system-ui, sans-serif' }}
+                >
+                    Send
+                </Button>
+            </form>
+        </>
     );
 };
 

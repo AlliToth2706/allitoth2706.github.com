@@ -17,31 +17,42 @@
     const clusters = [SparkleClusterA, SparkleClusterB, SparkleClusterC];
 
     let maxWidth = window.innerWidth;
+    let maxHeight = window.innerHeight;
     const minSparkleWidth = 1280;
+    const minFullSparkleWidth = 1536;
 
     // Make sure not to render if screen is too small
     if (maxWidth >= minSparkleWidth) {
+        let minNumberOfSparkles;
+        let maxSparkleNumDiff;
         // Get a random number of elements between 4 and 8
-
-        for (let i = 0; i < getRandomInt(5) + 4; ++i) {
+        if (maxWidth >= minFullSparkleWidth) {
+            minNumberOfSparkles = 4;
+            maxSparkleNumDiff = 4;
+        }
+        // Get a number between 2 and 4
+        else {
+            minNumberOfSparkles = 2;
+            maxSparkleNumDiff = 2;
+        }
+        for (let i = 0; i < getRandomInt(maxSparkleNumDiff + 1) + minNumberOfSparkles; ++i) {
             // For each, get a random cluster type and add it to the components array
-            components.push(clusters[getRandomInt(3)]);
+            components.push(clusters[getRandomInt(clusters.length)]);
         }
 
         // Give it a random position
-        let maxHeight = window.innerHeight;
         let minWidth = 0;
-        let center = (maxWidth >= '1536' ? 1 / 2 : 2 / 3) * maxWidth;
+        let center = (maxWidth >= minFullSparkleWidth ? 1 / 2 : 2 / 3) * maxWidth;
         let area = (maxWidth - center) / 2; // Divided by 2 due to being split on the sides of the screen
         let minRightArea = maxWidth - area;
         let maxSparkleArea = 120;
         let screenPadding = 30;
 
-        console.log(maxWidth, maxHeight);
+        // console.log(maxWidth, maxHeight);
 
         components.map((_, i) => {
             // Get coordinates for each of the components
-            const coorsLength = componentCoordinates.length;
+            const coordsLength = componentCoordinates.length;
             do {
                 let currentCoords = {
                     x:
@@ -70,7 +81,7 @@
 
                 // shouldAdd ? console.log(true) : console.log(false);
                 // console.log(currentCoords);
-            } while (coorsLength === componentCoordinates.length);
+            } while (coordsLength === componentCoordinates.length);
         });
     }
 </script>
@@ -79,10 +90,10 @@
     {#each components as component, index}
         <div
             style={`
-    left: ${componentCoordinates[index].x}px;
-    top: ${componentCoordinates[index].y}px;
+    left: ${(componentCoordinates[index].x / maxWidth) * 100}vw;
+    top: ${(componentCoordinates[index].y / maxHeight) * 100}vh;
     `}
-            class="fixed"
+            class="fixed hidden lg:block"
         >
             <svelte:component this={component} {size} {getRandomAnimationDelay} />
         </div>

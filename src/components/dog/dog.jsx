@@ -1,5 +1,5 @@
 import { ChakraProvider } from '@chakra-ui/react';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { createMemoryRouter, Route, Routes, RouterProvider } from 'react-router-dom';
 import Form from './Form';
 import Info from './Info';
 

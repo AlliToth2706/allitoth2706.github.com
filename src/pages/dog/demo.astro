@@ -1,5 +1,8 @@
 ---
 import Dog from '../../components/dog/dog.jsx';
+import Layout from '../../layouts/DemoLayout.astro';
 ---
 
-<Dog client:only="react" />
+<Layout title="Dog Breeds">
+    <Dog client:only="react" />
+</Layout>

@@ -1,0 +1,14 @@
+---
+import Bubble from '../components/Bubble.astro';
+---
+
+<h4 class="mt-2 mb-4 2xl:mb-6">Frontend Languages/Frameworks</h4>
+{
+    ['HTML', 'CSS (SASS, Tailwind)', 'Javascript', 'React', 'Svelte', 'Ionic', 'Flutter'].map((elem) => (
+        <Bubble name={elem} />
+    ))
+}
+<h4 class="mb-4 2xl:mb-6">Other Programming Languages</h4>
+{['Java', 'Python', 'C++', 'C#'].map((elem) => <Bubble name={elem} />)}
+<h4 class="mb-4 2xl:mb-6">Non-Languages Skills</h4>
+{['Git', 'VSCode', 'SEO'].map((elem) => <Bubble name={elem} />)}

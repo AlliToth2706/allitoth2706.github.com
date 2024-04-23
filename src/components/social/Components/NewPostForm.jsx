@@ -13,18 +13,39 @@ import {
     FormErrorMessage,
     Input,
     Button,
-    Tab,
-    TabList,
-    Tabs,
-    TabPanels,
-    TabPanel,
     Text,
 } from '@chakra-ui/react';
 import { useContext, useState } from 'react';
 import { imageRegex, UserContext, longToastTime, shortToastTime, maxPostLength } from '../App';
-import { createPost, getAllPosts, upload } from '../Data/posts';
+import { createPost, getAllPosts } from '../Data/posts';
 import Quill from './Quill';
 import { PostContext } from '../Pages/Forum';
+
+/**
+ * Check if the post's text is valid
+ */
+export const checkValidPost = (text, isInvalid, toast) => {
+    if (text.replace(/<(.|\n)*?>/g, '').trim().length === 0) {
+        toast({
+            title: `Please enter some text`,
+            status: 'error',
+            duration: shortToastTime,
+            isClosable: true,
+        });
+        return false;
+    }
+
+    if (isInvalid) {
+        toast({
+            title: `The post is too large. Please keep to ${maxPostLength} characters.`,
+            status: 'error',
+            duration: shortToastTime,
+            isClosable: true,
+        });
+        return false;
+    }
+    return true;
+};
 
 /**
  * Form to create a new post from user input.
@@ -40,7 +61,7 @@ const NewPostForm = () => {
         text: '',
         image_url: '',
     };
-    const [file, setFile] = useState();
+    // const [file, setFile] = useState();
     const [newPost, setNewPost] = useState(blankPost);
     const toast = useToast();
     const [isValidLink, setValidLink] = useState(null);
@@ -55,24 +76,57 @@ const NewPostForm = () => {
     // Changes the values passed through whenever there is a change
     // to be used in the passed handleSubmit function
     const handleChange = (e) => {
-        if (e.target.name === 'image_file') {
-            setFile(e.target.files[0]);
-        } else {
-            const tmp = { ...newPost };
-            tmp[e.target.name] = e.target.value;
-            if (e.target.name === 'image_url') {
-                setValidLink(e.target.value !== '' && imageRegex.test(e.target.value));
-            }
-
-            setNewPost(tmp);
+        // if (e.target.name === 'image_file') {
+        //     setFile(e.target.files[0]);
+        // } else {
+        const tmp = { ...newPost };
+        tmp[e.target.name] = e.target.value;
+        if (e.target.name === 'image_url') {
+            setValidLink(e.target.value !== '' && imageRegex.test(e.target.value));
         }
+
+        setNewPost(tmp);
+        // }
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if (isInvalid) {
+
+        if (!checkValidPost(newPost.text, isInvalid, toast)) return;
+
+        // if (file != null) {
+        //     const uploaded = await upload(file);
+
+        //     if (typeof uploaded !== 'string') {
+        //         toast({
+        //             title: 'Image upload failed.',
+        //             description: 'Try using a link, or try again later',
+        //             status: 'error',
+        //             duration: shortToastTime,
+        //             isClosable: true,
+        //         });
+
+        //         return;
+        //     }
+
+        //     // Makes a new post with the information given
+        //     createPost({ ...newPost, image_url: uploaded });
+        //     setPosts(getAllPosts());
+
+        //     // Sets the new post back to blank
+        //     setNewPost(blankPost);
+
+        //     // Lets the user know their action was successful
+        //     toast({
+        //         title: `New ${postText} created.`,
+        //         status: 'success',
+        //         duration: longToastTime,
+        //         isClosable: true,
+        //     });
+        // } else {
+        if (isValidLink === false) {
             toast({
-                title: 'Post is not valid.',
+                title: 'Image URL not valid.',
                 status: 'error',
                 duration: shortToastTime,
                 isClosable: true,
@@ -80,65 +134,26 @@ const NewPostForm = () => {
             return;
         }
 
-        if (file != null) {
-            const uploaded = await upload(file);
+        // Makes a new post with the information given
+        createPost({ ...newPost });
+        setPosts(getAllPosts());
 
-            if (typeof uploaded !== 'string') {
-                toast({
-                    title: 'Image upload failed.',
-                    description: 'Try using a link, or try again later',
-                    status: 'error',
-                    duration: shortToastTime,
-                    isClosable: true,
-                });
+        // Sets the new post back to blank
+        setNewPost(blankPost);
+        setIsInvalid(true);
 
-                return;
-            }
-
-            // Makes a new post with the information given
-            createPost({ ...newPost, image_url: uploaded });
-            setPosts(getAllPosts());
-
-            // Sets the new post back to blank
-            setNewPost(blankPost);
-
-            // Lets the user know their action was successful
-            toast({
-                title: `New ${postText} created.`,
-                status: 'success',
-                duration: longToastTime,
-                isClosable: true,
-            });
-        } else {
-            if (isValidLink === false) {
-                toast({
-                    title: 'Image URL not valid.',
-                    status: 'error',
-                    duration: shortToastTime,
-                    isClosable: true,
-                });
-                return;
-            }
-
-            // Makes a new post with the information given
-            createPost({ ...newPost });
-            setPosts(getAllPosts());
-
-            // Sets the new post back to blank
-            setNewPost(blankPost);
-
-            // Lets the user know their action was successful
-            toast({
-                title: `New ${postText} created.`,
-                status: 'success',
-                duration: longToastTime,
-                isClosable: true,
-            });
-        }
+        // Lets the user know their action was successful
+        toast({
+            title: `New ${postText} created.`,
+            status: 'success',
+            duration: longToastTime,
+            isClosable: true,
+        });
+        // }
     };
 
     return (
-        <Accordion allowToggle minW="50%">
+        <Accordion allowToggle w="50%">
             <AccordionItem>
                 <AccordionButton>
                     <Heading textAlign="center" size="md">
@@ -157,7 +172,7 @@ const NewPostForm = () => {
                         <Text as="i" mt={2} mb={4} w="100%" alignSelf="baseline" fontSize="sm">
                             Hint: Select text to format it
                         </Text>
-                        <Tabs w="100%">
+                        {/* <Tabs w="100%">
                             <TabList>
                                 <Tab>Upload image</Tab>
                                 <Tab>Use image link</Tab>
@@ -188,7 +203,21 @@ const NewPostForm = () => {
                                     </FormControl>
                                 </TabPanel>
                             </TabPanels>
-                        </Tabs>
+                        </Tabs> */}
+
+                        <FormControl mb={2} isInvalid={isValidLink == null ? false : !isValidLink}>
+                            <FormLabel>Image</FormLabel>
+                            <Input
+                                type="url"
+                                name="image_url"
+                                placeholder="Add an image"
+                                value={newPost.image_url}
+                                onChange={handleChange}
+                            />
+                            <FormErrorMessage>
+                                URL provided does not point to an image, or is not a URL.
+                            </FormErrorMessage>
+                        </FormControl>
 
                         <Flex direction="row" w="full" mt={4}>
                             <Button type="submit">{postText}</Button>

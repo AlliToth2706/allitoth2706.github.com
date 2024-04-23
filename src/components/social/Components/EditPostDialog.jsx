@@ -7,19 +7,15 @@ import {
     Input,
     useDisclosure,
     useToast,
-    Tab,
-    TabList,
-    Tabs,
-    TabPanels,
-    TabPanel,
 } from '@chakra-ui/react';
-import { useState } from 'react';
-import { imageRegex, longToastTime, shortToastTime } from '../App';
-import { editPost, getAllPosts, removePost, upload } from '../Data/posts';
+import { useState, useContext } from 'react';
+import { imageRegex, longToastTime } from '../App';
+import { editPost, getAllPosts, removePost } from '../Data/posts';
 import Alert from './Alert';
 import { maxPostLength } from '../App';
 import Quill from './Quill';
 import { PostContext } from '../Pages/Forum';
+import { checkValidPost } from './NewPostForm';
 
 /**
  * Form for the user to edit their posts.
@@ -34,7 +30,7 @@ const EditPostDialog = ({ original_post, id, setEditing }) => {
 
     const [isValidLink, setValidLink] = useState(null);
 
-    const [file, setFile] = useState();
+    // const [file, setFile] = useState();
 
     const closeAndSync = () => {
         setEditing(false);
@@ -43,42 +39,41 @@ const EditPostDialog = ({ original_post, id, setEditing }) => {
 
     const handleChange = (e) => {
         e.preventDefault();
-        if (e.target.name === 'image_file') {
-            setFile(e.target.files[0]);
-        } else {
-            let tmp = { ...post };
-            tmp[e.target.name] = e.target.value;
+        // if (e.target.name === 'image_file') {
+        //     setFile(e.target.files[0]);
+        // } else {
+        let tmp = { ...post };
+        tmp[e.target.name] = e.target.value;
 
-            if (e.target.name === 'image_url') {
-                setValidLink(e.target.value !== '' ? imageRegex.test(e.target.value) : null);
-            }
-
-            setPost(tmp);
+        if (e.target.name === 'image_url') {
+            setValidLink(e.target.value !== '' ? imageRegex.test(e.target.value) : null);
         }
+
+        setPost(tmp);
+        // }
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        if (isInvalid) {
-            return;
-        }
+        if (!checkValidPost(post.text, isInvalid, toast)) return;
 
-        if (file != null) {
-            const uploaded = await upload(file);
-            setPost({ ...post, image_url: uploaded });
-        } else if (isValidLink === false) {
-            toast({
-                title: 'Avatar URL not valid.',
-                status: 'error',
-                duration: shortToastTime,
-                isClosable: true,
-            });
-            return;
-        }
+        // if (file != null) {
+        //     const uploaded = await upload(file);
+        //     setPost({ ...post, image_url: uploaded });
+        // } else if (isValidLink === false) {
+        //     toast({
+        //         title: 'Avatar URL not valid.',
+        //         status: 'error',
+        //         duration: shortToastTime,
+        //         isClosable: true,
+        //     });
+        //     return;
+        // }
 
         // Makes a new post with the information given
-        editPost({ ...post }, id);
+        // console.log(post);
+        editPost({ ...original_post, ...post }, id);
         closeAndSync();
 
         // Lets the user know their action was successful
@@ -116,7 +111,7 @@ const EditPostDialog = ({ original_post, id, setEditing }) => {
                     <FormErrorMessage>The post must be {maxPostLength} characters at max.</FormErrorMessage>
                 </FormControl>
 
-                <Tabs>
+                {/* <Tabs>
                     <TabList>
                         <Tab>Upload image</Tab>
                         <Tab>Use image link</Tab>
@@ -143,7 +138,17 @@ const EditPostDialog = ({ original_post, id, setEditing }) => {
                             </FormControl>
                         </TabPanel>
                     </TabPanels>
-                </Tabs>
+                </Tabs> */}
+
+                <FormControl mb={2} isInvalid={isValidLink == null ? false : !isValidLink}>
+                    <Input
+                        type="url"
+                        name="image_url"
+                        value={post.image_url ?? ''}
+                        placeholder="Add an Image link"
+                        onChange={handleChange}
+                    />
+                </FormControl>
 
                 <ButtonGroup gap={2}>
                     {original_post.text === post.text && original_post.image_url === post.image_url ? (

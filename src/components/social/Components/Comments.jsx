@@ -1,13 +1,14 @@
 import { addComment, addReply, editComment, editReply, getAllPosts, removeComment, removeReply } from '../Data/posts';
-import { Box, Button, ButtonGroup, Flex, FormControl, Spacer, Text, useDisclosure } from '@chakra-ui/react';
+import { Box, Button, ButtonGroup, Flex, FormControl, Spacer, Text, useDisclosure, useToast } from '@chakra-ui/react';
 import React, { useContext, useState } from 'react';
-import { textFilter, UserContext } from '../App';
+import { shortToastTime, textFilter, UserContext } from '../App';
 import Alert from '../Components/Alert';
 import ReactionBar from './ReactionBar';
 import AvatarButton from './AvatarButton';
 import Quill from './Quill';
 import { PostContext } from '../Pages/Forum';
 import { getDetails } from '../Data/account-details';
+import { checkValidPost } from './NewPostForm';
 
 // TODO: Probably change comments/posts to be based on A1
 
@@ -20,7 +21,8 @@ const CommentForm = ({ parent_id, comment_id, type, setIsReplying }) => {
     const User = useContext(UserContext);
     const { setPosts } = useContext(PostContext);
 
-    const [isInvalid, setIsInvalid] = useState(false);
+    const [isInvalid, setIsInvalid] = useState(true);
+    const toast = useToast();
 
     // Makes an array with the length of posts to hold the comments
     const [newComment, setNewComment] = useState('');
@@ -33,9 +35,7 @@ const CommentForm = ({ parent_id, comment_id, type, setIsReplying }) => {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        if (isInvalid) {
-            return;
-        }
+        if (!checkValidPost(newComment, isInvalid, toast)) return;
 
         if (type === 'reply') {
             // Adds comment to the array
@@ -92,6 +92,8 @@ const EditComment = ({ originalComment, isReply, post_id, comment_id, reply_id, 
 
     const [comment, setComment] = useState(originalComment.comment);
 
+    const toast = useToast();
+
     const { isOpen, onOpen, onClose } = useDisclosure();
     const [isInvalid, setIsInvalid] = useState(false);
 
@@ -103,7 +105,7 @@ const EditComment = ({ originalComment, isReply, post_id, comment_id, reply_id, 
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        if (isInvalid) return;
+        if (!checkValidPost(comment, isInvalid, toast)) return;
 
         // Edits the post
         // editPost({ text: comment }, data.post_id);

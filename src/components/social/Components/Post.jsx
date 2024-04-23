@@ -52,8 +52,7 @@ const Post = ({ post, id }) => {
 
                 {/* Post contents */}
                 {isEditing ? (
-                    // <EditPost originalPost={post} id={id} setEditing={setEditing} />
-                    <EditPostDialog data={post} setEditing={setEditing} />
+                    <EditPostDialog original_post={post} id={id} setEditing={setEditing} />
                 ) : (
                     <Box
                         className="text"

@@ -7,7 +7,7 @@
 
 const LS_POSTS = 'posts';
 
-//The reactions available in Loop Agile Now
+//The reactions available in Social Website
 //Has a name, and a material icon
 const reactionTypes = {
     like: {
@@ -32,7 +32,6 @@ const getAllPostReactions = async (postId) => {
     // } catch (e) {
     //     return e?.response.status ?? 0;
     // }
-
     // todo
 };
 
@@ -49,7 +48,6 @@ const getUserPostReactions = async (postId, userEmail) => {
     // } catch (e) {
     //     return e?.response.status ?? 0;
     // }
-
     // todo
 };
 
@@ -64,7 +62,7 @@ const addReaction = async (postId, userEmail, reactionType) => {
     // return res.status === 200;
 
     // todo
-    return false
+    return false;
 };
 
 /**
@@ -75,7 +73,6 @@ const addReaction = async (postId, userEmail, reactionType) => {
 const stripUserReactionsFromPost = async (postId, userEmail) => {
     // const res = await client.delete(`/${postId}/${userEmail}`);
     // return res.status === 200;
-    
     // todo
 };
 

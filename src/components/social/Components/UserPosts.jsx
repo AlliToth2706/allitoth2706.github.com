@@ -10,30 +10,35 @@ const UserPosts = ({ user }) => {
     const [posts, setPosts] = useState(null);
 
     useEffect(() => {
-        (async () => {
-            let p = /*await*/ getAllPosts();
-            p = p
-                .map((e) => {
-                    e.comments = e.comments
-                        ?.map((f) => {
-                            f.comments = f.comments?.filter((g) => g.email === user);
-                            return f;
-                        })
-                        .filter((f) => f.email === user || f.comments.length > 0);
+        // (async () => {
+        let p = /*await*/ getAllPosts();
+        p = p
+            .map((e) => {
+                e.comments = e.comments
+                    ?.map((f) => {
+                        f.comments = f.comments?.filter((g) => g.email === user);
+                        return f;
+                    })
+                    .filter((f) => f.email === user || f.comments.length > 0);
 
-                    return e;
-                })
-                .filter((e) => e.email === user || e.comments.length > 0);
-            setPosts(p);
-        })();
+                return e;
+            })
+            .filter((e) => e.email === user || e.comments.length > 0);
+        setPosts(p);
+        // })();
     }, [user]);
 
     return (
         <Loading bool={posts}>
+            {posts.length !== 0 ? (
+                <Heading size="lg">
+                    Posts by {u.first_name} {u.last_name}
+                </Heading>
+            ) : null}
             {posts?.map((e, i) => {
                 return (
                     <Flex key={i} w="50%">
-                        <Post post={e} readOnly={true} />
+                        <Post post={e} id={i} />
                     </Flex>
                 );
             })}

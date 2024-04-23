@@ -5,7 +5,6 @@ import { getUsers } from './accounts';
 const LS_FOLLOWS = 'follows';
 
 const initialiseFollows = () => {
-    // console.log(localStorage.getItem(LS_FOLLOWS));
     if (localStorage.getItem(LS_FOLLOWS) !== null) return;
 
     setFollows({});
@@ -28,8 +27,7 @@ const getFollows = (email) => {
     //     return e?.response.status ?? 0;
     // }
     const allFollows = getAllFollows();
-    // console.log(allFollows);
-    return allFollows[email];
+    return allFollows[email] ?? [];
 };
 
 const getAllFollows = () => {
@@ -61,7 +59,15 @@ const getFollowsTo = (email) => {
     // } catch (e) {
     //     return e?.response.status ?? 0;
     // }
-    // todo: code this
+
+    const allFollows = getAllFollows();
+    const followers = [];
+    for (const [key, value] of Object.entries(allFollows)) {
+        if (value.includes(email)) {
+            followers.push(key);
+        }
+    }
+    return followers;
 };
 
 /**
@@ -77,8 +83,13 @@ const getFollow = (from_email, to_email) => {
     // } catch (e) {
     //     return e?.response?.status ?? 0;
     // }
-    // todo: code this
-    return true;
+
+    const follows = getFollows(from_email);
+    follows.forEach((e) => {
+        if (e === to_email) return true;
+    });
+
+    return false;
 };
 
 /**

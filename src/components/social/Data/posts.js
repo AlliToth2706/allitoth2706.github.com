@@ -99,15 +99,15 @@ const removeUpdoot = (postId, username) => {
 
 /**
  * The function description goes here.
- * @param {number} postId - The numerical id of the post
+ * @param {number} parent_id - The numerical id the post's parent
  * @param {object} comment - The object of the comment being added
  */
-const addComment = (postId, comment) => {
+const addComment = (parent_id, comment) => {
     // Grabs the posts in local storage
     let posts = getAllPosts();
 
     // Adds the comment to the array
-    posts[postId].comments.push(comment);
+    posts[parent_id].comments.push(comment);
 
     // Puts the new posts information into local storage
     replacePosts(posts);
@@ -115,16 +115,18 @@ const addComment = (postId, comment) => {
 
 /**
  * Changes a comment on a post to the be whatever is passed through.
- * @param {number} postId - The numerical id of the post
- * @param {number} commentId - The numerical id of the comment
+ * @param {number} parent_id - The numerical id of the reply's parent post
+ * @param {number} comment_id - The numerical id of the reply's parent comment
  * @param {object} comment - The object of the comment being added
  */
-const editComment = (postId, commentId, comment) => {
+const editComment = (parent_id, comment_id, comment) => {
     // Grabs the posts in local storage
     let posts = getAllPosts();
 
+    console.log(posts);
+
     // Change the comment in the array
-    posts[postId].comments[commentId] = comment;
+    posts[parent_id].comments[comment_id] = comment;
 
     // Puts the new posts information into local storage
     replacePosts(posts);
@@ -148,16 +150,18 @@ const removeComment = (postId, commentId) => {
 
 /**
  * Adds a reply to the comment given.
- * @param {number} postId - The numerical postId of the post
- * @param {number} commentId - The numerical id of the comment
+ * @param {number} post_id - The numerical postId of the post
+ * @param {number} comment_id - The numerical id of the comment
  * @param {object} reply - The object of the reply being added
  */
-const addReply = (postId, commentId, reply) => {
+const addReply = (post_id, comment_id, reply) => {
     // Grabs the posts in local storage
     let posts = getAllPosts();
 
+    console.log(posts, post_id);
+
     // Adds the comment to the array
-    posts[postId].comments[commentId].replies.push(reply);
+    posts[post_id].comments[comment_id].replies.push(reply);
 
     // Puts the new posts information into local storage
     replacePosts(posts);

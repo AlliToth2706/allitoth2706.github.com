@@ -22,15 +22,18 @@ import {
 } from '@chakra-ui/react';
 import { useContext, useState } from 'react';
 import { imageRegex, UserContext, longToastTime, shortToastTime, maxPostLength } from '../App';
-import { createPost, upload } from '../Data/posts';
+import { createPost, getAllPosts, upload } from '../Data/posts';
 import Quill from './Quill';
+import { PostContext } from '../Pages/Forum';
 
 /**
  * Form to create a new post from user input.
  * Comment creation done elsewhere
  */
-const NewPostForm = ({ syncCurrentPosts }) => {
+const NewPostForm = () => {
     const User = useContext(UserContext);
+    const { setPosts } = useContext(PostContext);
+
     const postText = 'Post';
     const blankPost = {
         email: User,
@@ -93,7 +96,8 @@ const NewPostForm = ({ syncCurrentPosts }) => {
             }
 
             // Makes a new post with the information given
-            createPost({ ...newPost, image_url: uploaded }, syncCurrentPosts);
+            createPost({ ...newPost, image_url: uploaded });
+            setPosts(getAllPosts());
 
             // Sets the new post back to blank
             setNewPost(blankPost);
@@ -117,7 +121,8 @@ const NewPostForm = ({ syncCurrentPosts }) => {
             }
 
             // Makes a new post with the information given
-            createPost({ ...newPost }, syncCurrentPosts);
+            createPost({ ...newPost });
+            setPosts(getAllPosts());
 
             // Sets the new post back to blank
             setNewPost(blankPost);
@@ -133,26 +138,26 @@ const NewPostForm = ({ syncCurrentPosts }) => {
     };
 
     return (
-        <Accordion allowToggle minW='50%'>
+        <Accordion allowToggle minW="50%">
             <AccordionItem>
                 <AccordionButton>
-                    <Heading textAlign='center' size='md'>
+                    <Heading textAlign="center" size="md">
                         New {postText}
                     </Heading>
                     <Spacer />
                     <AccordionIcon />
                 </AccordionButton>
                 <AccordionPanel pb={4}>
-                    <Flex as='form' align='center' justify='center' direction='column' w='full' onSubmit={handleSubmit}>
+                    <Flex as="form" align="center" justify="center" direction="column" w="full" onSubmit={handleSubmit}>
                         <FormControl isRequired={true} mb={2} isInvalid={newPost.text.length > maxPostLength}>
                             <FormLabel>Body</FormLabel>
-                            <Quill value={newPost.text} textCallback={handleQuillChange} container='new-post' />
+                            <Quill value={newPost.text} textCallback={handleQuillChange} container="new-post" />
                             <FormErrorMessage>The post must be {maxPostLength} characters at max.</FormErrorMessage>
                         </FormControl>
-                        <Text as='i' mt={2} mb={4} w='100%' alignSelf='baseline' fontSize='sm'>
+                        <Text as="i" mt={2} mb={4} w="100%" alignSelf="baseline" fontSize="sm">
                             Hint: Select text to format it
                         </Text>
-                        <Tabs w='100%'>
+                        <Tabs w="100%">
                             <TabList>
                                 <Tab>Upload image</Tab>
                                 <Tab>Use image link</Tab>
@@ -160,10 +165,10 @@ const NewPostForm = ({ syncCurrentPosts }) => {
                             <TabPanels>
                                 <TabPanel>
                                     <input
-                                        type='file'
+                                        type="file"
                                         multiple={false}
-                                        accept='image/*'
-                                        name='image_file'
+                                        accept="image/*"
+                                        name="image_file"
                                         onChange={handleChange}
                                     />
                                 </TabPanel>
@@ -171,9 +176,9 @@ const NewPostForm = ({ syncCurrentPosts }) => {
                                     <FormControl mb={2} isInvalid={isValidLink == null ? false : !isValidLink}>
                                         <FormLabel>Image</FormLabel>
                                         <Input
-                                            type='url'
-                                            name='image_url'
-                                            placeholder='Add an image'
+                                            type="url"
+                                            name="image_url"
+                                            placeholder="Add an image"
                                             value={newPost.image_url}
                                             onChange={handleChange}
                                         />
@@ -185,8 +190,8 @@ const NewPostForm = ({ syncCurrentPosts }) => {
                             </TabPanels>
                         </Tabs>
 
-                        <Flex direction='row' w='full' mt={4}>
-                            <Button type='submit'>{postText}</Button>
+                        <Flex direction="row" w="full" mt={4}>
+                            <Button type="submit">{postText}</Button>
                             <Spacer />
                             <Button onClick={() => setNewPost(blankPost)}>Clear</Button>
                         </Flex>

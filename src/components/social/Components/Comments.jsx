@@ -1,4 +1,4 @@
-import { createPost, editPost, removePost } from '../Data/posts';
+import { addComment, addReply, editComment, editReply, getAllPosts, removeComment, removeReply } from '../Data/posts';
 import { Box, Button, ButtonGroup, Flex, FormControl, Spacer, Text, useDisclosure } from '@chakra-ui/react';
 import React, { useContext, useState } from 'react';
 import { textFilter, UserContext } from '../App';
@@ -6,14 +6,20 @@ import Alert from '../Components/Alert';
 import ReactionBar from './ReactionBar';
 import AvatarButton from './AvatarButton';
 import Quill from './Quill';
+import { PostContext } from '../Pages/Forum';
+import { getDetails } from '../Data/account-details';
 
 // TODO: Probably change comments/posts to be based on A1
 
 /**
  * The form for users to add comments to posts.
  */
-const CommentForm = ({ parent_id, setIsReplying, syncCurrentPosts }) => {
+
+const CommentForm = ({ parent_id, comment_id, type, setIsReplying }) => {
+    // const CommentForm = ({ parent_id, setIsReplying, syncCurrentPosts }) => {
     const User = useContext(UserContext);
+    const { setPosts } = useContext(PostContext);
+
     const [isInvalid, setIsInvalid] = useState(false);
 
     // Makes an array with the length of posts to hold the comments
@@ -27,17 +33,31 @@ const CommentForm = ({ parent_id, setIsReplying, syncCurrentPosts }) => {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        console.log(newComment, isInvalid, parent_id);
-
         if (isInvalid) {
             return;
         }
-        createPost({ email: User, text: newComment, parent_post_id: parent_id }, syncCurrentPosts);
+
+        if (type === 'reply') {
+            // Adds comment to the array
+            addReply(parent_id, comment_id, { email: User, comment: newComment });
+
+            // Hides the reply box on submit
+            setIsReplying(false);
+        } else
+            addComment(parent_id, {
+                email: User,
+                comment: newComment,
+                replies: [],
+            });
+
+        // createPost({ email: User, text: newComment, parent_post_id: parent_id }, syncCurrentPosts);
 
         // Resets comment
         setNewComment('');
 
         setIsReplying(false);
+
+        setPosts(getAllPosts());
     };
 
     return (
@@ -58,7 +78,7 @@ const CommentForm = ({ parent_id, setIsReplying, syncCurrentPosts }) => {
 };
 
 CommentForm.defaultProps = {
-    parent_id: null,
+    comment_id: null,
     type: 'comment',
     setIsReplying: () => {},
 };
@@ -66,8 +86,11 @@ CommentForm.defaultProps = {
 /**
  * The form for users to edit their comments.
  */
-const EditComment = ({ data, setEditing, syncCurrentPosts }) => {
-    const [comment, setComment] = useState(data.text);
+// const EditComment = ({ data, setEditing, syncCurrentPosts }) => {
+const EditComment = ({ originalComment, isReply, post_id, comment_id, reply_id, setEditing }) => {
+    const { setPosts } = useContext(PostContext);
+
+    const [comment, setComment] = useState(originalComment.comment);
 
     const { isOpen, onOpen, onClose } = useDisclosure();
     const [isInvalid, setIsInvalid] = useState(false);
@@ -80,17 +103,23 @@ const EditComment = ({ data, setEditing, syncCurrentPosts }) => {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        if (isInvalid) {
-            return;
-        }
+        if (isInvalid) return;
 
         // Edits the post
-        editPost({ text: comment }, data.post_id, syncCurrentPosts);
+        // editPost({ text: comment }, data.post_id);
+        isReply
+            ? editReply(post_id, comment_id, reply_id, { email: originalComment.email, comment: comment })
+            : editComment(post_id, comment_id, {
+                  email: originalComment.email,
+                  comment: comment,
+                  replies: originalComment.replies,
+              });
 
         // Resets comment
         setComment('');
 
         // Re-grabs the posts from localStorage
+        setPosts(getAllPosts());
 
         setEditing(false);
     };
@@ -100,8 +129,9 @@ const EditComment = ({ data, setEditing, syncCurrentPosts }) => {
             <Alert
                 heading="Delete Comment?"
                 onClick={() => {
-                    removePost(data.post_id, syncCurrentPosts);
+                    isReply ? removeReply(post_id, comment_id, reply_id) : removeComment(post_id, comment_id);
                     setEditing(false);
+                    setPosts(getAllPosts());
                     onClose();
                 }}
                 isOpen={isOpen}
@@ -113,7 +143,7 @@ const EditComment = ({ data, setEditing, syncCurrentPosts }) => {
                 </FormControl>
 
                 <ButtonGroup gap={2}>
-                    {comment === data.text ? (
+                    {comment === originalComment.comment ? (
                         <Button onClick={() => setEditing(false)}>Cancel</Button>
                     ) : (
                         <Button type="submit">Submit</Button>
@@ -130,107 +160,85 @@ const EditComment = ({ data, setEditing, syncCurrentPosts }) => {
 /**
  * Generates the comments on a post, and the replies on a post. Also handles editing state.
  */
-const Comment = ({ data, isReply, syncCurrentPosts, readOnly }) => {
+const Comment = ({ comment, isReply, post_id, comment_id, reply_id }) => {
     const User = useContext(UserContext);
-    const commenter = data.user;
-    data.text = textFilter.clean(data.text);
+    let commenter = getDetails(comment.email);
+    comment.comment = textFilter.clean(comment.comment);
     commenter.fullname = `${commenter.first_name} ${commenter.last_name}`;
     const [isEditing, setEditing] = useState(false);
     const [isReplying, setIsReplying] = useState(false);
 
     return (
         <>
-            {data.deleted_by == null ? (
-                <Flex
-                    direction="row"
-                    align="start"
-                    p={4}
-                    borderLeft={isReply && '1px solid grey'}
-                    ml={isReply ? 10 : null}
-                    minH="96px"
-                >
-                    <Flex direction="column">
-                        <AvatarButton user={commenter} />
-                        {data.email === User && (
-                            <Button
-                                size="sm"
-                                onClick={() => {
-                                    setEditing(true);
-                                }}
-                                mt={2}
-                            >
-                                Edit
-                            </Button>
-                        )}
-                        {!isReply && (
-                            <Button
-                                size="sm"
-                                className="material-icons"
-                                onClick={() => setIsReplying(!isReplying)}
-                                mt={2}
-                            >
-                                reply
-                            </Button>
-                        )}
-                    </Flex>
-                    <Flex direction="column" justify="center" w="full">
-                        <Flex direction="row" mr={8}>
-                            <Flex direction="column">
-                                <Text fontSize="l" fontWeight="bold" className="name" ml={4}>
-                                    {commenter.fullname}
-                                </Text>
-                                {isEditing ? (
-                                    <EditComment
-                                        data={data}
-                                        isReply={isReply}
-                                        setEditing={setEditing}
-                                        syncCurrentPosts={syncCurrentPosts}
-                                    />
-                                ) : (
-                                    <Text ml={4} dangerouslySetInnerHTML={{ __html: data.text }} />
-                                )}
-                            </Flex>
-                            <Spacer />
-                            <ReactionBar userEmail={User} postId={data.post_id} />
-                        </Flex>
-
-                        {isReplying && (
-                            <Flex justify="end" w="full" ml="auto">
-                                <CommentForm
-                                    parent_id={data.post_id}
-                                    setIsReplying={setIsReplying}
-                                    type="reply"
-                                    syncCurrentPosts={syncCurrentPosts}
+            <Flex
+                direction="row"
+                align="start"
+                p={4}
+                borderLeft={isReply && '1px solid grey'}
+                ml={isReply ? 10 : null}
+                minH="96px"
+            >
+                <Flex direction="column">
+                    <AvatarButton user={commenter} />
+                    {comment.email === User && (
+                        <Button
+                            size="sm"
+                            onClick={() => {
+                                setEditing(true);
+                            }}
+                            mt={2}
+                        >
+                            Edit
+                        </Button>
+                    )}
+                    {!isReply && (
+                        <Button size="sm" className="material-icons" mt={2} onClick={() => setIsReplying(true)}>
+                            reply
+                        </Button>
+                    )}
+                </Flex>
+                <Flex direction="column" justify="center" w="full">
+                    <Flex direction="row" mr={8}>
+                        <Flex direction="column">
+                            <Text fontSize="l" fontWeight="bold" className="name" ml={4}>
+                                {commenter.fullname}
+                            </Text>
+                            {isEditing ? (
+                                <EditComment
+                                    originalComment={comment}
+                                    isReply={isReply}
+                                    post_id={post_id}
+                                    comment_id={comment_id}
+                                    reply_id={reply_id}
+                                    setEditing={setEditing}
                                 />
-                            </Flex>
-                        )}
+                            ) : (
+                                <Text ml={4} dangerouslySetInnerHTML={{ __html: comment.comment || comment.reply }} />
+                            )}
+                        </Flex>
+                        <Spacer />
+                        <ReactionBar userEmail={User} post_id={comment.id} />
                     </Flex>
+
+                    {isReplying && (
+                        <Flex justify="end" w="full" ml="auto">
+                            <CommentForm
+                                parent_id={post_id}
+                                comment_id={comment_id}
+                                setIsReplying={setIsReplying}
+                                type="reply"
+                            />
+                        </Flex>
+                    )}
                 </Flex>
-            ) : (
-                <Flex
-                    align="center"
-                    p={4}
-                    borderLeft={isReply && '1px solid grey'}
-                    ml={isReply ? 10 : null}
-                    minH="96px"
-                >
-                    <Text as="i">This comment was deleted{data.deleted_by === 'Admin' && ' by an admin'}.</Text>
-                </Flex>
-            )}
-            {data?.comments?.map((reply, i) => {
-                return (
-                    <React.Fragment key={i}>
-                        <Comment data={reply} isReply={true} syncCurrentPosts={syncCurrentPosts} readOnly={readOnly} />
-                    </React.Fragment>
-                );
-            })}
+            </Flex>
         </>
     );
 };
 
 Comment.defaultProps = {
     isReply: false,
-    readOnly: false,
+    reply_id: null,
 };
 
 export default Comment;

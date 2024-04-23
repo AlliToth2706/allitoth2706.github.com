@@ -360,14 +360,7 @@ const Profile = ({ setUser }) => {
                     </Flex>
 
                     <Flex direction="column" justify="center" align="center" mt={20} mb="5%">
-                        {User === loggedInUser || isFollowed ? (
-                            <>
-                                <Heading size="lg">
-                                    Posts by {u.first_name} {u.last_name}
-                                </Heading>
-                                <UserPosts user={User} />
-                            </>
-                        ) : null}
+                        {User === loggedInUser || isFollowed ? <UserPosts user={User} /> : null}
                     </Flex>
                 </Flex>
             ) : (

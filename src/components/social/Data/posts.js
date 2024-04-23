@@ -214,6 +214,7 @@ const upload = async (file) => {
             image: file,
             type: 'stream',
         });
+        if (res.status !== 200) return null;
         return res?.data?.link ?? null;
     } catch (e) {
         console.log(e);

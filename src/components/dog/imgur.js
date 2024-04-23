@@ -6,7 +6,8 @@ import imgur from 'imgur';
  * @returns {string} Link to the uploaded file
  */
 export const upload = async (file) => {
-    const imgurClient = new imgur({ clientId: '7af276a6d6f6507' });
+    // UNUSED
+    const imgurClient = new imgur({ clientId: '' });
     try {
         const res = await imgurClient.upload({
             image: file,

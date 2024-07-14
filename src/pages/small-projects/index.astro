@@ -1,0 +1,38 @@
+---
+import Layout from '../../layouts/Layout.astro';
+---
+
+<Layout title="Small Projects">
+    <main id="content">
+        <section>
+            <ul>
+                Some small projects that I've made over the years.
+
+                <br /><br />
+
+                <div class="grid grid-cols-3">
+                    <div>Suika Game</div>
+                    <div class="col-span-2 flex justify-center">
+                        <iframe width="320" height="480" src="https://smolalli.github.io/SuikaGame"></iframe>
+                    </div>
+                </div>
+
+                <div>
+                    <h2>React application: Dog Breeds</h2>
+                    This project uses: JavaScript, React, Chakra UI.
+                    <br />
+                    <br />
+                    This project was origianlly made for my Full Stack Development class, in which we had a final assessment
+                    to create a page relating to dog breeds. The application takes user infromation, and outputs it onto
+                    a different page for confirmation, and then saves the information into localstorage. Although it is rather
+                    simplistic, the assignment was to create a specific design of a webpage with a time limit.
+                    <br />
+                    <br />
+                    Note: this demonstration has modified the code to make it work with Astro, and to use a memory router
+                    rather than the usual browser router.
+                    <a href="dog-demo">Link to demo</a>
+                </div>
+            </ul>
+        </section>
+    </main>
+</Layout>

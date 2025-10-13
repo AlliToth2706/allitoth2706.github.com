@@ -16,6 +16,7 @@
     "@astrojs/tailwind": "^5.1.0",
     "@chakra-ui/react": "^2.8.2",
     "@emailjs/browser": "^4.1.0",
+    "@hcaptcha/react-hcaptcha": "^1.12.1",
     "@mui/icons-material": "^5.14.19",
     "astro": "^4.0.7",
     "bad-words": "^3.0.4",

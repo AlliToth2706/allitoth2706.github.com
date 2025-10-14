@@ -51,7 +51,7 @@ const ContactForm = () => {
         if (ableToSend) {
             // Check if the honeypot was filled in
             if (honeypot) {
-                console.log("true");
+                console.log("honeypot: true");
                 // Refuse to allow to send anymore
                 setAbleToSend(false);
 
@@ -70,6 +70,7 @@ const ContactForm = () => {
      * @param {Event} e
      */
     const sendEmail = (e) => {
+        console.log(e)
         // emailjs
         //     .sendForm(
         //         "service_92ilc6y",
@@ -103,18 +104,13 @@ const ContactForm = () => {
         //     );
         // }
         console.log("email send");
-        console.log(token);
+        // console.log(token);
     };
 
     document.querySelector("form")?.addEventListener("submit", (e) => {
         e.preventDefault();
-        sendEmail(e);
+        onSubmit(e);
     });
-
-    const handleVerificationSuccess = (token, ekey) => {
-        console.log("Token:", token);
-        console.log("Ekey:", ekey);
-    };
 
     const onExpire = () => {
         console.log("hCaptcha Token Expired");
@@ -174,7 +170,7 @@ const ContactForm = () => {
                 <HCaptcha
                     sitekey={import.meta.env.PUBLIC_HCAPTCHA_SITE}
                     size="invisible"
-                    onVerify={setToken}
+                    onVerify={sendEmail}
                     onError={onError}
                     onExpire={onExpire}
                     ref={captchaRef}

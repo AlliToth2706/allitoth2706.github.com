@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import emailjs from "@emailjs/browser";
 import {
     Button,
@@ -172,7 +172,7 @@ const ContactForm = () => {
                     Send
                 </Button>
                 <HCaptcha
-                    sitekey={process.env.HCAPTCHA_SITE}
+                    sitekey={import.meta.env.PUBLIC_HCAPTCHA_SITE}
                     size="invisible"
                     onVerify={setToken}
                     onError={onError}

@@ -33,8 +33,8 @@ const ContactForm = () => {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [ableToSend, setAbleToSend] = useState(true);
     const [honeypot, setHoneypot] = useState("");
-    const [token, setToken] = useState(null);
-    const captchaRef = useRef(null);
+    const captchaRef = useRef();
+    const form = useRef();
 
     const borderStyle = {
         borderColor: "rgb(216 180 254)",
@@ -62,55 +62,45 @@ const ContactForm = () => {
             setTimeout(() => {
                 setAbleToSend(true);
             }, 300000); // Make sure can't send multiple in a row, fixes bug/prevents spam
+
             captchaRef.current.execute();
         }
     };
 
-    /**
-     * @param {Event} e
-     */
-    const sendEmail = (e) => {
-        console.log(e)
-        // emailjs
-        //     .sendForm(
-        //         "service_92ilc6y",
-        //         "template_z5wxocl",
-        //         e.target,
-        //         "NiUNW8GeHcJ4usiAk"
-        //     )
-        //     .then(
-        //         (result) => {
-        //             toast({
-        //                 title: "Message sent successfully!",
-        //                 description: "Alli will be back to you shortly.",
-        //                 status: "success",
-        //                 duration: 5000,
-        //                 isClosable: true,
-        //             });
-        //             setIsSubmitting(false);
-        //             // Clears the form after sending the email
-        //             e.target.reset();
-        //         },
-        //         (error) => {
-        //             toast({
-        //                 title: "Something went wrong.",
-        //                 description: "Try again later.",
-        //                 status: "error",
-        //                 duration: 5000,
-        //                 isClosable: true,
-        //             });
-        //             setIsSubmitting(false);
-        //         }
-        //     );
-        // }
-        console.log("email send");
-        // console.log(token);
+    const sendEmail = () => {
+        emailjs
+            .sendForm(
+                "service_92ilc6y",
+                "template_z5wxocl",
+                form.current,
+                "NiUNW8GeHcJ4usiAk"
+            )
+            .then(
+                (result) => {
+                    toast({
+                        title: "Message sent successfully!",
+                        description: "Alli will be back to you shortly.",
+                        status: "success",
+                        duration: 5000,
+                        isClosable: true,
+                    });
+                    setIsSubmitting(false);
+                    // Clears the form after sending the email
+                    form.current.reset();
+                },
+                (error) => {
+                    toast({
+                        title: "Something went wrong.",
+                        description: "Try again later.",
+                        status: "error",
+                        duration: 5000,
+                        isClosable: true,
+                    });
+                    console.error(error);
+                    setIsSubmitting(false);
+                }
+            );
     };
-
-    document.querySelector("form")?.addEventListener("submit", (e) => {
-        e.preventDefault();
-        onSubmit(e);
-    });
 
     const onExpire = () => {
         console.log("hCaptcha Token Expired");
@@ -122,7 +112,7 @@ const ContactForm = () => {
 
     return (
         <>
-            <form>
+            <form ref={form}>
                 <FormControl isRequired>
                     <FormLabel>Name</FormLabel>
                     <Input
@@ -146,8 +136,8 @@ const ContactForm = () => {
                 >
                     <FormLabel></FormLabel>
                     <Input
-                        type="email"
-                        name="user_email_repeat"
+                        type="fax"
+                        name="fax"
                         _focusVisible={borderStyle}
                         autoComplete="off"
                     />
@@ -159,9 +149,12 @@ const ContactForm = () => {
                 </FormControl>
                 <br />
                 <Button
-                    type="submit"
                     isLoading={isSubmitting}
                     disabled={ableToSend}
+                    onClick={(e) => {
+                        e.preventDefault();
+                        onSubmit();
+                    }}
                     className="w-full hover:bg-purple-300 rounded-lg bg-gray-100 text-black"
                     style={{ fontFamily: "system-ui, sans-serif" }}
                 >

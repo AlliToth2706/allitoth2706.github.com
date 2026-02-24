@@ -51,17 +51,24 @@ const ContactForm = () => {
         if (ableToSend) {
             // Check if the honeypot was filled in
             if (honeypot) {
-                console.log("honeypot: true");
                 // Refuse to allow to send anymore
                 setAbleToSend(false);
 
-                // Do something else(?)
+                toast({
+                    title: "Something went wrong.",
+                    description: "Try again later.",
+                    status: "error",
+                    duration: 5000,
+                    isClosable: true,
+                });
+
+                setIsSubmitting(false);
                 return;
             }
             setAbleToSend(false);
             setTimeout(() => {
                 setAbleToSend(true);
-            }, 300000); // Make sure can't send multiple in a row, fixes bug/prevents spam
+            }, 2e4); // Make sure can't send multiple in a row, fixes bug/prevents spam
 
             captchaRef.current.execute();
         }
@@ -70,16 +77,18 @@ const ContactForm = () => {
     const sendEmail = () => {
         emailjs
             .sendForm(
-                "service_92ilc6y",
-                "template_z5wxocl",
+                import.meta.env.EMAILJS_SERVICE, //TODO: get these from emailjs
+                import.meta.env.EMAILJS_TEMPLATE,
                 form.current,
-                "NiUNW8GeHcJ4usiAk"
+                {
+                    publicKey: import.meta.env.EMAILJS_SETTINGS,
+                },
             )
             .then(
                 (result) => {
                     toast({
                         title: "Message sent successfully!",
-                        description: "Alli will be back to you shortly.",
+                        description: "Alli will get back to you shortly.",
                         status: "success",
                         duration: 5000,
                         isClosable: true,
@@ -96,9 +105,8 @@ const ContactForm = () => {
                         duration: 5000,
                         isClosable: true,
                     });
-                    console.error(error);
                     setIsSubmitting(false);
-                }
+                },
             );
     };
 
@@ -133,13 +141,19 @@ const ContactForm = () => {
                 <FormControl
                     className="opacity-0 !absolute top-0 left-0 h-0 w-0 -z-10"
                     onChange={(e) => setHoneypot(e.target.value)}
+                    tabIndex="-1"
                 >
                     <FormLabel></FormLabel>
                     <Input
-                        type="fax"
-                        name="fax"
-                        _focusVisible={borderStyle}
+                        type="email"
+                        name="user_email_repeat"
                         autoComplete="off"
+                        required={false}
+                        tabIndex="-1"
+                        h="0"
+                        w="0"
+                        outline={null}
+                        border={null}
                     />
                 </FormControl>
                 <br />
@@ -150,7 +164,7 @@ const ContactForm = () => {
                 <br />
                 <Button
                     isLoading={isSubmitting}
-                    disabled={ableToSend}
+                    disabled={ableToSend} //TODO: invert this for release
                     onClick={(e) => {
                         e.preventDefault();
                         onSubmit();

@@ -1,49 +1,57 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import Card from '../components/Card.astro';
-import Typewriter from '../components/Typewriter.svelte';
-import Navbar from '../components/Navbar.astro';
-import PageSection from '../components/PageSection.astro';
-import ContactForm from '../components/ContactForm.jsx';
-import Loading from '../components/Loading.svelte';
-import SparkleCluster from '../components/SparkleCluster.svelte';
-import AboutArea from '../components/AboutArea.astro';
-import SkillsArea from '../components/SkillsArea.astro';
-import Heading from '../components/Heading.astro';
-import SubHeading from '../components/SubHeading.astro';
+import Layout from "../layouts/Layout.astro";
+import Card from "../components/Card.astro";
+import Typewriter from "../components/Typewriter.svelte";
+import Navbar from "../components/Navbar.astro";
+import PageSection from "../components/PageSection.astro";
+import ContactForm from "../components/ContactForm.jsx";
+import SparkleCluster from "../components/SparkleCluster.svelte";
+import AboutArea from "../components/AboutArea.astro";
+import SkillsArea from "../components/SkillsArea.astro";
+import Heading from "../components/Heading.astro";
+import SubHeading from "../components/SubHeading.astro";
+let a = import.meta.env.DEV;
 ---
 
-<!-- <script>
-    // const content = document.getElementById('content');
-    // setTimeout(() => {
-    //     content.removeAttribute('data-invisible');
-    // }, 1000);
-</script> -->
+<!-- TODO: change loading from how it looks rn to be just the "hi im alli" text and then have everything else fade in -->
 <Layout>
-    <!-- <Loading client:only="svelte" /> -->
-    <div id="content" data-invisible="false" class="2xl:w-1/2 lg:w-2/3 m-auto">
+    <div id="content" class="2xl:w-1/2 lg:w-2/3 m-auto">
         <SparkleCluster client:only="svelte" />
-        <Navbar />
-        <main class="m-auto text-md 2xl:text-xl initial snap-both snap-mandatory leading-normal">
+        <Navbar invisible={true} />
+        <main
+            class="m-auto text-md 2xl:text-xl initial snap-both snap-mandatory leading-normal"
+        >
             <!-- https://codepen.io/argyleink/pen/yLovWjz css -->
             <PageSection id="home">
                 <ul>
                     <div class="flex items-center justify-center">
-                        <Typewriter client:only="svelte" text="Hi, I'm Alli." />
+                        <Typewriter
+                            client:only="svelte"
+                            text="Hi, I'm Alli."
+                            devMode={a}
+                        />
                     </div>
-                    <h2 class="flex items-center justify-center font-normal text-2xl lg:text-3xl">
-                        I specialise in&nbsp<b
-                            class="text-transparent bg-clip-text from-purple-300 to-white bg-gradient-to-b"
+                    <h2
+                        class="flex items-center justify-center font-normal text-2xl lg:text-3xl animate__animated"
+                        id="subheader"
+                        data-hidden="true"
+                        style="--animate-delay: 0.5s"
+                    >
+                        I specialise in&nbsp
+                        <b
+                            class="text-transparent bg-clip-text from-purple-400 to-white bg-gradient-to-b"
                             >Frontend Web Development</b
                         >.
                     </h2>
                 </ul>
             </PageSection>
 
-            <PageSection id="about">
-                <div class="hidden lg:grid grid-cols-2 content-evenly mt-0 lg:mt-16 2xl:mt-0">
+            <PageSection id="about" invisible={true}>
+                <div
+                    class="hidden lg:grid grid-cols-2 content-evenly mt-0 lg:mt-16 2xl:mt-0"
+                >
                     <ul class="ml-0 xl:ml-12 mr-2">
-                        <SubHeading>About</SubHeading>
+                        <SubHeading>About Me</SubHeading>
                         <AboutArea />
                     </ul>
 
@@ -54,19 +62,19 @@ import SubHeading from '../components/SubHeading.astro';
                 </div>
 
                 <ul class="block lg:hidden">
-                    <Heading>About</Heading>
+                    <Heading>About Me</Heading>
                     <AboutArea />
                 </ul>
             </PageSection>
 
-            <PageSection id="skills" classes="block lg:hidden">
+            <PageSection id="skills" classes="block lg:hidden" invisible={true}>
                 <ul>
                     <Heading>Skills</Heading>
                     <SkillsArea />
                 </ul>
             </PageSection>
 
-            <PageSection id="projects">
+            <PageSection id="projects" invisible={true}>
                 <div>
                     <Heading>Projects</Heading>
                     <ul role="list" class="grid grid-cols-3 gap-8 p-0">
@@ -75,10 +83,18 @@ import SubHeading from '../components/SubHeading.astro';
                             title="Social Media Demo"
                             body="React Demonstraction of a social media website."
                         />
-                        <Card href="precision/" title="Precision Electronics" body="A React website I created for a client." />
+                        <Card
+                            href="precision/"
+                            title="Precision Electronics"
+                            body="A React website I created for a client."
+                        />
                         <Card href="#" title="" body="a" />
                         <Card href="#" title="" body="a" />
-                        <Card href="website/" title="This website" body="Information about this website." />
+                        <Card
+                            href="website/"
+                            title="This website"
+                            body="Information about this website."
+                        />
                         <Card
                             href="small-projects/"
                             title="Small Projects"
@@ -88,10 +104,15 @@ import SubHeading from '../components/SubHeading.astro';
                 </div>
             </PageSection>
 
-            <PageSection id="contact">
-                <ul class="w-96 py-0 mt-0 lg:mt-16 2xl:mt-0">
+            <PageSection id="contact" invisible={true}>
+                <ul
+                    class="w-96 py-0 mt-0 lg:mt-16 2xl:mt-0 overflow-hidden"
+                    style="max-height: calc(100vh - 96px)"
+                >
                     <Heading>Contact</Heading>
-                    <p class="text-center mb-4">Feel free to contact me down below!</p>
+                    <p class="text-center mb-4">
+                        Feel free to contact me down below!
+                    </p>
                     <ContactForm client:only="react" />
                 </ul>
             </PageSection>

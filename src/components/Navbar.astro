@@ -1,15 +1,38 @@
-<nav class="fixed top-0 w-full 2xl:w-1/2 lg:w-2/3 bg-zinc-900 z-10">
+---
+interface Props {
+    invisible?: boolean;
+}
+const { invisible = false } = Astro.props;
+---
+
+<nav
+    class="fixed top-0 w-full 2xl:w-1/2 lg:w-2/3 bg-zinc-900 z-10 animate__animated animate__fadeInDown"
+    data-invisible={`${invisible}`}
+    id="navbar"
+    style="--animate-delay: 0.5s"
+>
     <ul class="my-4 p-0 flex items-center">
         {
             [
-                { href: 'home', internal: <img class="w-16 h-16 align-middle inline-block" src="/logo-1.png" /> },
-                { href: 'about' },
-                { href: 'projects' },
-                { href: 'contact' },
+                {
+                    href: "home",
+                    internal: (
+                        <img
+                            class="w-16 h-16 align-middle inline-block"
+                            src="/logo-1.png"
+                        />
+                    ),
+                },
+                { href: "about" },
+                { href: "projects" },
+                { href: "contact" },
             ].map((e) => {
                 return (
                     <li class="list-none inline-block px-2.5 first:mr-auto">
-                        <a href={`#${e.href}`} class="text-inherit hover:text-purple-300 capitalize">
+                        <a
+                            href={`#${e.href}`}
+                            class="text-inherit hover:text-purple-300 capitalize"
+                        >
                             {e.internal ? e.internal : e.href}
                         </a>
                     </li>

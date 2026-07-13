@@ -2,11 +2,16 @@
 interface Props {
     id: string;
     classes?: string;
+    invisible?: boolean;
 }
 
-const { id, classes } = Astro.props;
+const { id, classes, invisible = false } = Astro.props;
 ---
 
-<section id={id} class=`${classes} h-screen snap-start snap-always flex items-center justify-center mx-4`>
+<section
+    data-invisible={`${invisible}`}
+    id={id}
+    class=`${classes} h-screen snap-start snap-always flex items-center justify-center mx-4 overflow-hidden`
+>
     <slot />
 </section>

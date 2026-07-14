@@ -19,13 +19,10 @@ const { title = "Alli's Portfolio" } = Astro.props;
         <meta name="generator" content={Astro.generator} />
         <title>{title}</title>
         <link
-            href="https://static.fontawesome.com/css/fontawesome-app.css"
-            rel="stylesheet"
-        />
-        <link
             rel="stylesheet"
             href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
         />
+        <link href="app.css" rel="stylesheet" />
     </head>
     <body class="bg-zinc-900 text-white m-0 h-full">
         <slot />

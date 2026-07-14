@@ -1,22 +1,74 @@
 ---
 import Bubble from "../components/Bubble.astro";
 import FaIcon from "../components/FaIcon.svelte";
+import Icon from "./Icon.astro";
+import Ionic from "../assets/ionic.svg";
+import CPP from "../assets/c++.svg";
+import CSharp from "../assets/csharp.svg";
+import VSCode from "../assets/vscode.svg";
 ---
 
-<h4 class="mt-2 mb-4 2xl:mb-6">Frontend Languages/Frameworks</h4>
-<!-- {
+{
     [
-        "HTML",
-        "CSS (SASS, Tailwind)",
-        "Javascript",
-        "React",
-        "Svelte",
-        "Ionic",
-        "Flutter",
-    ].map((elem) => <Bubble name={elem} />)
+        [
+            {
+                icon: ["fab", "html5"],
+                text: "HTML: The building blocks of web development.",
+            },
+        ],
+        [
+            {
+                icon: ["fab", "css"],
+                text: "Major familiarity with CSS and common styling tools (SASS, Tailwind)",
+            },
+            { icon: ["fab", "sass"] },
+            { icon: ["fab", "tailwind-css"] },
+        ],
+        [
+            {
+                icon: ["fab", "js"],
+                text: "Proficiency in Javascript and Typescript",
+            },
+            { icon: ["fab", "typescript"] },
+        ],
+        [
+            {
+                icon: ["fab", "react"],
+                text: "The frameworks that I am most familiar with, and have extensive knowledge of.",
+            },
+            { icon: ["fab", "svelte"] },
+        ],
+        [
+            {
+                icon: ["fab", "flutter"],
+                text: "The mobile frameworks that I have used in the past.",
+            },
+            {
+                icon_custom: Ionic,
+            },
+
+            { icon: ["fab", "react"] },
+        ],
+        [
+            { icon: ["fab", "java"], text: "" },
+            { icon: ["fab", "python"] },
+            { icon_custom: CPP },
+            { icon_custom: CSharp },
+        ],
+        [
+            { icon: ["fab", "git-alt"], text: "" },
+            { icon_custom: VSCode },
+            { icon: ["fas", "magnifying-glass-chart"] },
+        ],
+    ].map((elem) => (
+        <Bubble>
+            {elem.map((i) =>
+                i?.icon_custom != null ? (
+                    <Icon path={i.icon_custom} />
+                ) : (
+                    <FaIcon icon={i?.icon} info={i?.text} />
+                ),
+            )}
+        </Bubble>
+    ))
 }
-<h4 class="mb-4 2xl:mb-6">Other Programming Languages</h4>
-{["Java", "Python", "C++", "C#"].map((elem) => <Bubble name={elem} />)}
-<h4 class="mb-4 2xl:mb-6">Non-Languages Skills</h4>
-{["Git", "VSCode", "SEO"].map((elem) => <Bubble name={elem} />)} -->
-<FaIcon icon="fa-html5" />

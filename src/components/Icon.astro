@@ -1,0 +1,9 @@
+---
+interface Props {
+    path: ImageMetadata;
+}
+
+const { path } = Astro.props;
+---
+
+<img class="svg-inline--fa fa-lg" src={path.src} />

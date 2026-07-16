@@ -16,6 +16,10 @@ const { title = "Alli's Portfolio" } = Astro.props;
         <meta name="description" content="Astro description" />
         <meta name="viewport" content="width=device-width" />
         <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <meta
+            http-equiv="Content-Security-Policy"
+            content="default-src 'self'; script-src 'self' https://hcaptcha.com https://*.hcaptcha.com https://*.emailjs.com 'unsafe-inline'; frame-src 'self' https://hcaptcha.com https://*.hcaptcha.com https://*.emailjs.com; style-src 'self' 'unsafe-inline' https://hcaptcha.com https://*.hcaptcha.com https://*.googleapis.com; connect-src 'self' https://hcaptcha.com https://*.hcaptcha.com https://*.emailjs.com;"
+        />
         <meta name="generator" content={Astro.generator} />
         <title>{title}</title>
         <link

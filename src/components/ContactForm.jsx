@@ -77,11 +77,11 @@ const ContactForm = () => {
     const sendEmail = () => {
         emailjs
             .sendForm(
-                import.meta.env.EMAILJS_SERVICE, //TODO: get these from emailjs
-                import.meta.env.EMAILJS_TEMPLATE,
+                import.meta.env.PUBLIC_EMAILJS_SERVICE, //TODO: get these from emailjs
+                import.meta.env.PUBLIC_EMAILJS_TEMPLATE,
                 form.current,
                 {
-                    publicKey: import.meta.env.EMAILJS_SETTINGS,
+                    publicKey: import.meta.env.PUBLIC_EMAILJS_SETTINGS,
                 },
             )
             .then(
@@ -98,6 +98,7 @@ const ContactForm = () => {
                     form.current.reset();
                 },
                 (error) => {
+                    console.log(error);
                     toast({
                         title: "Something went wrong.",
                         description: "Try again later.",

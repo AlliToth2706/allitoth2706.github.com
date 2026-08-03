@@ -10,11 +10,9 @@
 
     config.autoAddCss = false;
 
-    export let icon, info;
+    export let icon;
 
     library.add(fab, fas);
 </script>
 
-<div class="tooltip" data-tip={info}>
-    <FontAwesomeIcon {icon} size="lg" type="button" />
-</div>
+<FontAwesomeIcon {icon} size="xl" type="button" />

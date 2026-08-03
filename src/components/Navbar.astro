@@ -24,11 +24,14 @@ const { invisible = false } = Astro.props;
                     ),
                 },
                 { href: "about" },
+                { href: "skills", mobile: true },
                 { href: "projects" },
                 { href: "contact" },
             ].map((e) => {
                 return (
-                    <li class="list-none inline-block px-2.5 first:mr-auto">
+                    <li
+                        class={`list-none inline-block px-2.5 first:mr-auto lg:${e.mobile === true ? "hidden" : "inline-block"}`}
+                    >
                         <a
                             href={`#${e.href}`}
                             class="text-inherit hover:text-purple-300 capitalize"

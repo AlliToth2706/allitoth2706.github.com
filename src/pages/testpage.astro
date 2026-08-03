@@ -1,0 +1,44 @@
+---
+import Layout from "../layouts/Layout.astro";
+import PageSection from "../components/PageSection.astro";
+import AboutArea from "../components/AboutArea.astro";
+import SkillsArea from "../components/SkillsArea.astro";
+import Heading from "../components/Heading.astro";
+import SubHeading from "../components/SubHeading.astro";
+---
+
+<Layout>
+    <div id="content" class="2xl:w-1/2 lg:w-2/3 m-auto">
+        <!-- <SparkleCluster client:only="svelte" />
+        <Navbar invisible={true} /> -->
+        <main>
+            <PageSection id="about">
+                <div
+                    class="hidden lg:grid grid-rows-2 content-evenly mt-0 lg:mt-16 2xl:mt-0"
+                >
+                    <ul class="ml-0 xl:ml-16 mr-6">
+                        <SubHeading>About Me</SubHeading>
+                        <AboutArea />
+                    </ul>
+
+                    <ul class="ml-8 mr-0 xl:mr-6">
+                        <SubHeading>Skills</SubHeading>
+                        <SkillsArea />
+                    </ul>
+                </div>
+
+                <ul class="block lg:hidden">
+                    <Heading>About Me</Heading>
+                    <AboutArea />
+                </ul>
+            </PageSection>
+
+            <PageSection id="skills" classes="block lg:hidden" invisible={true}>
+                <ul>
+                    <Heading>Skills</Heading>
+                    <SkillsArea />
+                </ul>
+            </PageSection>
+        </main>
+    </div></Layout
+>

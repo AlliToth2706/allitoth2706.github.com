@@ -1,19 +1,24 @@
 ---
 interface Props {
     name?: string;
+    info?: string;
 }
 
-const { name } = Astro.props;
+const { name, info } = Astro.props;
 ---
 
 {
     name ? (
-        <div class="inline-flex appearance-none align-middle justify-center select-none relative whitespace-nowrap items-center mb-3 2xl:mb-5 mr-2.5 px-4 bg-gray-100 text-black h-10 mw-10 rounded-md outline-2 outline-offset-2 outline outline-transparent leading-tight font-semibold">
-            {name}
+        <div class="tooltip" data-tip={info}>
+            <div class="inline-flex appearance-none align-middle justify-center select-none relative whitespace-nowrap items-center mb-3 2xl:mb-5 mr-2.5 px-4 bg-gray-100 text-black h-10 mw-10 rounded-md outline-2 outline-offset-2 outline outline-transparent leading-tight font-semibold">
+                {name}
+            </div>
         </div>
     ) : (
-        <div class="inline-flex appearance-none align-middle justify-center select-none relative whitespace-nowrap items-center mb-3 2xl:mb-5 mr-2.5 px-4 bg-gray-100 text-black h-10 mw-10 rounded-md outline-2 outline-offset-2 outline outline-transparent leading-tight font-semibold">
-            <slot />
+        <div class="tooltip" data-tip={info}>
+            <div class="inline-flex appearance-none align-middle justify-center select-none relative whitespace-nowrap items-center mb-3 2xl:mb-5 mr-2.5 px-4 bg-gray-100 text-black h-10 mw-10 rounded-md outline-2 outline-offset-2 outline outline-transparent leading-tight font-semibold">
+                <slot />
+            </div>
         </div>
     )
 }
